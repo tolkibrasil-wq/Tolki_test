@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tolki — O método que já ajudou +200 clínicas a triplicar agendamentos. Captação ativa + IA que converte + follow-up automático.">
+  <title>Tolki — Sua Clínica Lotada em 90 Dias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple: #7C3AED;
+      --purple-light: #A78BFA;
+      --blue: #3B82F6;
+      --cyan: #06B6D4;
+      --cyan-light: #22D3EE;
+      --pink: #EC4899;
+      --orange: #F97316;
+      --orange-dark: #EA580C;
+      --green: #22C55E;
+      --red: #EF4444;
+      --bg: #050510;
+      --bg-card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.06);
+      --glass-strong: rgba(255,255,255,0.1);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --text: #F1F5F9;
+      --text-dim: #94A3B8;
+      --text-dimmer: #64748B;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.65; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; line-height: 1.15; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { position: relative; }
+
+    /* ═══ AURORA BACKGROUND ═══ */
+    .aurora {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      overflow: hidden;
+    }
+    .aurora-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); opacity: 0.15;
+      animation: auroraMove 20s ease-in-out infinite alternate;
+    }
+    .aurora-blob:nth-child(1) {
+      width: 600px; height: 600px;
+      background: var(--purple);
+      top: -10%; left: -5%;
+    }
+    .aurora-blob:nth-child(2) {
+      width: 500px; height: 500px;
+      background: var(--cyan);
+      top: 30%; right: -10%;
+      animation-delay: -5s;
+      animation-duration: 25s;
+    }
+    .aurora-blob:nth-child(3) {
+      width: 400px; height: 400px;
+      background: var(--blue);
+      bottom: 10%; left: 20%;
+      animation-delay: -10s;
+      animation-duration: 30s;
+    }
+    .aurora-blob:nth-child(4) {
+      width: 350px; height: 350px;
+      background: var(--pink);
+      top: 60%; right: 30%;
+      animation-delay: -15s;
+      animation-duration: 22s;
+    }
+    @keyframes auroraMove {
+      0% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(80px, -60px) scale(1.1); }
+      66% { transform: translate(-40px, 40px) scale(0.95); }
+      100% { transform: translate(60px, 20px) scale(1.05); }
+    }
+
+    /* ═══ GRID OVERLAY ═══ */
+    .grid-overlay {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+    }
+
+    /* ═══ HEADER ═══ */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      backdrop-filter: blur(20px) saturate(1.4);
+      background: rgba(5, 5, 16, 0.7);
+      border-bottom: 1px solid var(--border);
+      transition: background 300ms;
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px; max-width: 1200px; margin: 0 auto;
+    }
+    .logo {
+      font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: white; border: none; padding: 10px 24px; border-radius: 10px;
+      font-weight: 600; font-size: 0.9rem; cursor: pointer;
+      transition: transform 200ms, box-shadow 200ms;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 120px 0 80px; position: relative; z-index: 1;
+    }
+    .hero-content { text-align: center; max-width: 850px; margin: 0 auto; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.15));
+      border: 1px solid rgba(124,58,237,0.3);
+      padding: 8px 20px; border-radius: 100px;
+      font-size: 0.85rem; color: var(--cyan-light);
+      margin-bottom: 28px;
+      backdrop-filter: blur(8px);
+    }
+    .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+      animation: badgePulse 2s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--green); }
+      50% { opacity: 0.5; box-shadow: 0 0 4px var(--green); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+      margin-bottom: 24px; letter-spacing: -1.5px;
+    }
+    .hero-gradient-text {
+      background: linear-gradient(135deg, var(--purple-light) 0%, var(--cyan-light) 50%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+    }
+
+    .hero-sub {
+      font-size: 1.15rem; color: var(--text-dim);
+      max-width: 640px; margin: 0 auto 40px; line-height: 1.75;
+    }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+
+    .cta-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: white; border: none; padding: 18px 40px; border-radius: 14px;
+      font-size: 1.15rem; font-weight: 700; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: transform 250ms, box-shadow 250ms;
+      box-shadow: 0 4px 30px rgba(249,115,22,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+      position: relative; overflow: hidden;
+    }
+    .cta-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0; transition: opacity 250ms;
+    }
+    .cta-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 40px rgba(249,115,22,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .cta-primary:hover::before { opacity: 1; }
+
+    .trust-row {
+      display: flex; justify-content: center; gap: 40px;
+      margin-top: 56px; flex-wrap: wrap;
+    }
+    .trust-item { text-align: center; min-width: 100px; }
+    .trust-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .trust-label { font-size: 0.8rem; color: var(--text-dimmer); margin-top: 2px; }
+
+    /* ═══ SECTION STYLES ═══ */
+    .sec { padding: 100px 0; position: relative; z-index: 1; }
+    .sec-alt { background: rgba(255,255,255,0.015); }
+    .sec-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem); text-align: center;
+      margin-bottom: 12px; font-weight: 700; letter-spacing: -0.5px;
+    }
+    .sec-sub {
+      text-align: center; color: var(--text-dim);
+      max-width: 560px; margin: 0 auto 60px; font-size: 1.05rem;
+    }
+    .sec-label {
+      text-align: center; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 3px; font-weight: 600; margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* ═══ CARDS ═══ */
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px;
+      backdrop-filter: blur(12px);
+      transition: transform 300ms cubic-bezier(.4,0,.2,1),
+                  border-color 300ms, box-shadow 300ms;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .card-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+    }
+    .card-icon-red { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.2); }
+    .card-icon-purple { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.25); }
+    .card-icon-blue { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.25); }
+    .card-icon-cyan { background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.25); }
+    .card h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 600; }
+    .card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; }
+    .card-step {
+      font-family: 'Outfit', sans-serif; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 3px; font-weight: 700;
+      color: var(--purple-light); margin-bottom: 14px;
+    }
+
+    /* ═══ METRICS ═══ */
+    .metrics-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; margin-top: 64px;
+    }
+    .metric {
+      text-align: center; padding: 32px 20px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; backdrop-filter: blur(12px);
+      position: relative; overflow: hidden;
+    }
+    .metric::after {
+      content: ''; position: absolute; bottom: 0; left: 20%; right: 20%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0.5;
+    }
+    .metric-val {
+      font-family: 'Outfit', sans-serif; font-size: 2.8rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--green), var(--cyan-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .metric-desc { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
+
+    /* ═══ COMPARISON ═══ */
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      max-width: 900px; margin: 0 auto;
+    }
+    @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-col { border-radius: 20px; padding: 36px; backdrop-filter: blur(12px); }
+    .compare-sem {
+      background: rgba(239,68,68,0.04);
+      border: 1px solid rgba(239,68,68,0.15);
+    }
+    .compare-com {
+      background: rgba(34,197,94,0.04);
+      border: 1px solid rgba(34,197,94,0.15);
+    }
+    .compare-col h3 {
+      font-size: 1.15rem; margin-bottom: 24px; font-weight: 700;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .compare-col ul { list-style: none; }
+    .compare-col li {
+      padding: 12px 0; font-size: 0.95rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 12px;
+      color: var(--text-dim);
+    }
+    .compare-col li:last-child { border-bottom: none; }
+    .compare-col li .icon { flex-shrink: 0; font-weight: 700; font-size: 1rem; }
+    .compare-sem li .icon { color: var(--red); }
+    .compare-com li .icon { color: var(--green); }
+
+    /* ═══ TESTIMONIALS ═══ */
+    .testimonial {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px; backdrop-filter: blur(12px);
+      transition: transform 300ms, border-color 300ms;
+    }
+    .testimonial:hover { transform: translateY(-4px); border-color: var(--border-hover); }
+    .testimonial-stars { color: #FBBF24; font-size: 1rem; letter-spacing: 2px; margin-bottom: 16px; }
+    .testimonial-text {
+      font-size: 0.95rem; color: var(--text-dim);
+      font-style: italic; line-height: 1.8; margin-bottom: 24px;
+      position: relative; padding-left: 20px;
+      border-left: 2px solid rgba(124,58,237,0.3);
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .testimonial-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .testimonial-name { font-weight: 600; font-size: 0.95rem; }
+    .testimonial-role { font-size: 0.8rem; color: var(--text-dimmer); }
+
+    /* ═══ LIVE CHAT SIMULATION ═══ */
+    .chat-demo {
+      max-width: 480px; margin: 0 auto;
+      border-radius: 24px; overflow: hidden;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+      backdrop-filter: blur(20px);
+    }
+    .chat-header {
+      background: linear-gradient(90deg, rgba(124,58,237,0.25), rgba(59,130,246,0.25));
+      padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .chat-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; flex-shrink: 0;
+    }
+    .chat-name { font-weight: 700; font-family: 'Outfit', sans-serif; font-size: 0.95rem; }
+    .chat-status { font-size: 0.75rem; color: var(--text-dimmer); display: flex; align-items: center; gap: 6px; }
+    .chat-online-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: badgePulse 2s infinite; }
+    .chat-messages { padding: 20px 16px; min-height: 360px; position: relative; }
+    .chat-bubble {
+      max-width: 85%; padding: 12px 16px; border-radius: 16px;
+      font-size: 0.9rem; line-height: 1.55; margin-bottom: 10px;
+      opacity: 0; transform: scale(0.6) translateY(10px);
+      transition: opacity 400ms cubic-bezier(.4,0,.2,1), transform 400ms cubic-bezier(.4,0,.2,1);
+      white-space: pre-line;
+    }
+    .chat-bubble.visible { opacity: 1; transform: scale(1) translateY(0); }
+    .chat-bubble.bot {
+      background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.25);
+      border-bottom-left-radius: 4px; margin-right: auto;
+    }
+    .chat-bubble.user {
+      background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.25);
+      border-bottom-right-radius: 4px; margin-left: auto;
+    }
+    .chat-typing { display: flex; gap: 4px; padding: 12px 16px; opacity: 0; transition: opacity 300ms; }
+    .chat-typing.active { opacity: 1; }
+    .chat-typing-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      animation: typingBounce 1.4s infinite;
+    }
+    .chat-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    /* ═══ DISPATCH SIMULATION ═══ */
+    .dispatch-demo {
+      max-width: 600px; margin: 0 auto;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px; backdrop-filter: blur(12px);
+    }
+    .dispatch-stats {
+      display: flex; justify-content: center; gap: 36px;
+      margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .dispatch-stat { text-align: center; }
+    .dispatch-stat-val {
+      font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800;
+    }
+    .dispatch-stat-label { font-size: 0.75rem; color: var(--text-dimmer); margin-top: 2px; }
+    .dispatch-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; border-radius: 12px;
+      background: rgba(255,255,255,0.02); margin-bottom: 6px;
+      border: 1px solid rgba(255,255,255,0.04);
+      opacity: 0; transform: translateX(-40px);
+      transition: opacity 500ms, transform 500ms;
+    }
+    .dispatch-row.visible { opacity: 1; transform: translateX(0); }
+    .dispatch-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .dispatch-info { flex: 1; }
+    .dispatch-name { font-size: 0.85rem; font-weight: 600; font-family: 'Outfit', sans-serif; }
+    .dispatch-phone { font-size: 0.75rem; color: var(--text-dimmer); }
+    .dispatch-status { font-size: 0.7rem; display: flex; align-items: center; gap: 4px; }
+    .dispatch-check { color: var(--green); }
+    .dispatch-sending { color: var(--purple-light); }
+    .dispatch-spinner {
+      width: 14px; height: 14px; border: 2px solid rgba(124,58,237,0.25);
+      border-top-color: var(--purple); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .dispatch-progress {
+      margin-top: 16px; height: 5px; border-radius: 3px;
+      background: rgba(255,255,255,0.05); overflow: hidden;
+    }
+    .dispatch-progress-bar {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--blue), var(--cyan));
+      width: 0%; transition: width 100ms linear;
+    }
+
+    /* ═══ DEMO LAYOUT ═══ */
+    .demo-split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      align-items: center; max-width: 1100px; margin: 0 auto;
+    }
+    .demo-text { }
+    .demo-text h3 {
+      font-size: 1.6rem; font-weight: 700; margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+    .demo-text p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.75; margin-bottom: 16px; }
+    .demo-features { list-style: none; }
+    .demo-features li {
+      padding: 8px 0; font-size: 0.9rem; color: var(--text-dim);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .demo-features li::before {
+      content: '✓'; color: var(--green); font-weight: 700; font-size: 0.85rem;
+    }
+    @media (max-width: 768px) {
+      .demo-split { grid-template-columns: 1fr; gap: 32px; }
+      .demo-text { order: 1; text-align: center; }
+      .demo-features { display: inline-block; text-align: left; }
+    }
+
+    /* ═══ FAQ ═══ */
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item {
+      border: 1px solid var(--border); border-radius: 16px;
+      margin-bottom: 12px; overflow: hidden;
+      background: var(--bg-card); backdrop-filter: blur(12px);
+      transition: border-color 250ms;
+    }
+    .faq-item:hover { border-color: var(--border-hover); }
+    .faq-q {
+      width: 100%; background: none; border: none; color: var(--text);
+      padding: 22px 28px; font-size: 1rem; font-weight: 500;
+      text-align: left; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'DM Sans', sans-serif; gap: 16px;
+    }
+    .faq-q:hover { color: var(--purple-light); }
+    .faq-arrow {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(124,58,237,0.1); display: flex;
+      align-items: center; justify-content: center;
+      transition: transform 300ms, background 300ms;
+      flex-shrink: 0; font-size: 0.7rem; color: var(--purple-light);
+    }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); background: rgba(124,58,237,0.2); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 400ms cubic-bezier(.4,0,.2,1), padding 400ms;
+      color: var(--text-dim); font-size: 0.95rem; line-height: 1.8;
+      padding: 0 28px;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding: 0 28px 24px; }
+
+    /* ═══ FINAL CTA ═══ */
+    .final-cta {
+      text-align: center; padding: 120px 24px;
+      position: relative; z-index: 1;
+    }
+    .final-cta-glow {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 50%,
+        rgba(124,58,237,0.12), rgba(6,182,212,0.06), transparent);
+    }
+    .final-cta-content { position: relative; z-index: 1; }
+    .final-cta h2 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      margin-bottom: 16px; font-weight: 800; letter-spacing: -1px;
+    }
+    .final-cta p {
+      color: var(--text-dim); margin-bottom: 36px;
+      font-size: 1.1rem; max-width: 550px; margin-left: auto; margin-right: auto;
+      line-height: 1.75;
+    }
+    .urgency-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 20px; font-size: 0.85rem; color: var(--orange);
+      background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25);
+      padding: 8px 18px; border-radius: 100px;
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      text-align: center; padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-dimmer); font-size: 0.8rem;
+      position: relative; z-index: 1;
+    }
+
+    /* ═══ ANIMATIONS ═══ */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 700ms cubic-bezier(.4,0,.2,1),
+                  transform 700ms cubic-bezier(.4,0,.2,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 100ms; }
+    .reveal-delay-2 { transition-delay: 200ms; }
+    .reveal-delay-3 { transition-delay: 300ms; }
+
+    .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .particle {
+      position: absolute; width: 2px; height: 2px;
+      background: rgba(255,255,255,0.3); border-radius: 50%;
+      animation: particleFloat linear infinite;
+    }
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* ═══ COUNTER ANIMATION ═══ */
+    .count-up {
+      font-family: 'Outfit', sans-serif; font-weight: 800;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .sec { padding: 72px 0; }
+      .trust-row { gap: 20px; }
+      .trust-val { font-size: 1.5rem; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { letter-spacing: -0.5px; }
+      .cta-primary { padding: 16px 32px; font-size: 1rem; }
+      .dispatch-stats { gap: 20px; }
+      .dispatch-stat-val { font-size: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .metrics-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══ INSTITUTIONAL VIDEO ═══ */
+    .inst-video {
+      max-width: 900px; margin: 0 auto;
+      border-radius: 24px; overflow: hidden;
+      background: linear-gradient(135deg, rgba(10,10,26,0.95), rgba(26,5,51,0.95));
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+      position: relative; aspect-ratio: 16/9;
+    }
+    .inst-video-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .inst-scene {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px;
+      opacity: 0; transform: scale(0.92);
+      transition: opacity 800ms cubic-bezier(.4,0,.2,1), transform 800ms cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+    }
+    .inst-scene.active {
+      opacity: 1; transform: scale(1);
+      pointer-events: auto;
+    }
+    .inst-logo-text {
+      font-family: 'Outfit', sans-serif; font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--purple-light), var(--blue), var(--cyan-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      opacity: 0; transform: scale(0.4);
+      transition: opacity 1s, transform 1s cubic-bezier(.17,.67,.35,1.5);
+    }
+    .inst-scene.active .inst-logo-text { opacity: 1; transform: scale(1); }
+    .inst-logo-sub {
+      font-size: clamp(0.8rem, 2vw, 1.2rem); color: rgba(255,255,255,0.5);
+      letter-spacing: 5px; text-transform: uppercase; margin-top: 8px;
+      opacity: 0; transition: opacity 800ms 400ms;
+    }
+    .inst-scene.active .inst-logo-sub { opacity: 1; }
+    .inst-logo-glow {
+      position: absolute; width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.25), transparent 70%);
+      filter: blur(60px); z-index: 0;
+      animation: instGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes instGlow { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+    .inst-tagline {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.8rem); font-weight: 800;
+      text-align: center; line-height: 1.35; max-width: 700px;
+    }
+    .inst-word {
+      display: inline-block; margin-right: 10px;
+      opacity: 0; transform: translateY(25px);
+      transition: opacity 400ms, transform 400ms cubic-bezier(.4,0,.2,1);
+    }
+    .inst-scene.active .inst-word { opacity: 1; transform: translateY(0); }
+    .inst-word-highlight { color: var(--purple-light); }
+
+    .inst-features {
+      display: flex; flex-wrap: wrap; gap: 20px;
+      justify-content: center; max-width: 700px;
+    }
+    .inst-feat {
+      width: 280px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 24px; text-align: center;
+      opacity: 0; transform: translateY(40px) scale(0.9);
+      transition: opacity 500ms, transform 500ms cubic-bezier(.4,0,.2,1);
+    }
+    .inst-scene.active .inst-feat { opacity: 1; transform: translateY(0) scale(1); }
+    .inst-feat-icon { font-size: 2rem; margin-bottom: 8px; }
+    .inst-feat-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
+    .inst-feat-desc { color: var(--text-dim); font-size: 0.85rem; }
+
+    .inst-stats {
+      display: flex; gap: 48px; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .inst-stat {
+      text-align: center;
+      opacity: 0; transform: scale(0.5);
+      transition: opacity 600ms, transform 600ms cubic-bezier(.17,.67,.35,1.5);
+    }
+    .inst-scene.active .inst-stat { opacity: 1; transform: scale(1); }
+    .inst-stat-val {
+      font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+    }
+    .inst-stat-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 4px; }
+
+    .inst-cta-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.6rem); font-weight: 800;
+      text-align: center; margin-bottom: 24px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 600ms, transform 600ms;
+    }
+    .inst-scene.active .inst-cta-title { opacity: 1; transform: translateY(0); }
+    .inst-cta-btn {
+      background: linear-gradient(135deg, var(--orange), var(--red));
+      padding: 16px 40px; border-radius: 14px; border: none;
+      color: #fff; font-size: 1.2rem; font-weight: 700;
+      font-family: 'Outfit', sans-serif; cursor: pointer;
+      box-shadow: 0 0 40px rgba(249,115,22,0.4);
+      opacity: 0; transform: scale(0.6);
+      transition: opacity 500ms 300ms, transform 500ms 300ms cubic-bezier(.17,.67,.35,1.5);
+    }
+    .inst-scene.active .inst-cta-btn { opacity: 1; transform: scale(1); }
+    .inst-cta-small {
+      color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 14px;
+      opacity: 0; transition: opacity 500ms 500ms;
+    }
+    .inst-scene.active .inst-cta-small { opacity: 1; }
+
+    .inst-progress {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: rgba(255,255,255,0.05);
+    }
+    .inst-progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--purple), var(--blue), var(--cyan));
+      transition: width 100ms linear;
+    }
+    .inst-play-btn {
+      position: absolute; inset: 0; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.4); cursor: pointer;
+      transition: background 300ms;
+    }
+    .inst-play-btn:hover { background: rgba(0,0,0,0.2); }
+    .inst-play-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; box-shadow: 0 0 40px rgba(124,58,237,0.5);
+      transition: transform 300ms;
+    }
+    .inst-play-btn:hover .inst-play-icon { transform: scale(1.1); }
+    .inst-play-label {
+      color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ═══ ACCESSIBILITY ═══ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .aurora-blob { animation: none !important; opacity: 0.1; }
+      .particle { display: none; }
+    }
+    :focus-visible { outline: 3px solid var(--purple-light); outline-offset: 3px; }
+    a { color: inherit; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <!-- AURORA BG -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora-blob"></div>
+    <div class="aurora-blob"></div>
+    <div class="aurora-blob"></div>
+    <div class="aurora-blob"></div>
+  </div>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="particles" aria-hidden="true" id="particles"></div>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="nav">
+      <div class="logo">Tolki</div>
+      <button class="nav-cta" aria-label="Falar com especialista Tolki">Falar com especialista</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge reveal">
+          <span class="badge-dot" aria-hidden="true"></span>
+          +200 clínicas ativas
+        </div>
+        <h1 class="reveal">Sua Clínica <span class="hero-gradient-text">Lotada em 90 Dias</span></h1>
+        <p class="hero-sub reveal">O mesmo método que já ajudou <strong>+200 clínicas</strong> a triplicar agendamentos. Captação ativa + IA que converte + follow-up automático. <strong>Tudo no piloto automático.</strong></p>
+        <button class="cta-primary reveal" aria-label="Quero lotar minha agenda">
+          Quero lotar minha agenda <span aria-hidden="true">→</span>
+        </button>
+        <div class="trust-row">
+          <div class="trust-item reveal reveal-delay-1">
+            <div class="trust-val">+200</div>
+            <div class="trust-label">Clínicas ativas</div>
+          </div>
+          <div class="trust-item reveal reveal-delay-2">
+            <div class="trust-val">3x</div>
+            <div class="trust-label">Mais agendamentos</div>
+          </div>
+          <div class="trust-item reveal reveal-delay-3">
+            <div class="trust-val">-60%</div>
+            <div class="trust-label">Menos custo</div>
+          </div>
+          <div class="trust-item reveal reveal-delay-3">
+            <div class="trust-val">24/7</div>
+            <div class="trust-label">Atendimento IA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN POINTS -->
+  <section class="sec">
+    <div class="container">
+      <div class="sec-label reveal">O problema</div>
+      <h2 class="sec-title reveal">Você se identifica?</h2>
+      <p class="sec-sub reveal">A maioria das clínicas enfrenta esses 3 problemas. A boa notícia: todos têm solução.</p>
+      <div class="grid-3">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon card-icon-red" aria-hidden="true">📅</div>
+          <h3>Agenda vazia sem explicação</h3>
+          <p>Um mês lota, no outro despenca. Você não consegue prever o faturamento e vive apagando incêndio. Enquanto isso, o aluguel e a folha não esperam.</p>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon card-icon-red" aria-hidden="true">💸</div>
+          <h3>Tráfego pago cada vez mais caro</h3>
+          <p>Você joga R$ 3.000, R$ 5.000 por mês em anúncios e a maioria dos leads nem responde. Os que respondem, pedem preço e somem. O ROI nunca fecha.</p>
+        </div>
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon card-icon-red" aria-hidden="true">❄️</div>
+          <h3>Leads esfriando na sua caixa</h3>
+          <p>A recepcionista não dá conta. Lead entra às 22h e só é respondido no outro dia. Quando liga, já foi pro concorrente. Dinheiro jogado fora todos os dias.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ LIVE CHAT DEMO (Remotion-style animation) ═══ -->
+  <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-label reveal">Veja em ação</div>
+      <h2 class="sec-title reveal">Sua IA Atendendo em Tempo Real</h2>
+      <p class="sec-sub reveal">Veja como a IA Tolki converte um lead em agendamento em segundos.</p>
+      <div class="demo-split">
+        <div class="demo-text reveal">
+          <h3>Atendimento instantâneo, <span style="color:var(--purple-light)">24 horas por dia</span></h3>
+          <p>Enquanto você dorme, a IA Tolki responde cada lead em segundos, tira dúvidas, quebra objeções e agenda consultas automaticamente.</p>
+          <ul class="demo-features">
+            <li>Resposta em menos de 5 segundos</li>
+            <li>Entende linguagem natural do paciente</li>
+            <li>Agenda diretamente no seu sistema</li>
+            <li>Transfere para humano quando necessário</li>
+          </ul>
+        </div>
+        <div class="chat-demo reveal" id="chatDemo">
+          <div class="chat-header">
+            <div class="chat-avatar">T</div>
+            <div>
+              <div class="chat-name">Tolki Assistente</div>
+              <div class="chat-status"><span class="chat-online-dot"></span> Online agora</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-typing" id="chatTyping">
+              <div class="chat-typing-dot"></div>
+              <div class="chat-typing-dot"></div>
+              <div class="chat-typing-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section class="sec">
+    <div class="container">
+      <div class="sec-label reveal">A solução</div>
+      <h2 class="sec-title reveal">O Método Tolki</h2>
+      <p class="sec-sub reveal">3 pilares que transformam sua clínica em máquina de agendamentos.</p>
+      <div class="grid-3">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-step">Passo 01</div>
+          <div class="card-icon card-icon-purple" aria-hidden="true">🎯</div>
+          <h3>Captação Ativa</h3>
+          <p>Nosso sistema encontra e alcança milhares de pessoas buscando exatamente o que sua clínica oferece. Sem depender de anúncios. Sem esperar indicações. Pacientes qualificados batendo na sua porta todo dia.</p>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-step">Passo 02</div>
+          <div class="card-icon card-icon-blue" aria-hidden="true">🤖</div>
+          <h3>IA que Converte</h3>
+          <p>Atendimento instantâneo, 24 horas, 7 dias por semana. A IA entende as dúvidas do paciente, explica procedimentos, tira objeções e agenda a consulta. Enquanto você dorme, ela está vendendo.</p>
+        </div>
+        <div class="card reveal reveal-delay-3">
+          <div class="card-step">Passo 03</div>
+          <div class="card-icon card-icon-cyan" aria-hidden="true">🔄</div>
+          <h3>Follow-up Infinito + CRM</h3>
+          <p>Lead esfriou? O sistema reativa. Paciente não confirmou? Lembrete automático. Faltou à consulta? Reagendamento imediato. Nenhum lead é perdido. Nunca mais.</p>
+        </div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric reveal">
+          <div class="metric-val">3x</div>
+          <div class="metric-desc">Aumento em consultas agendadas</div>
+        </div>
+        <div class="metric reveal reveal-delay-1">
+          <div class="metric-val">-60%</div>
+          <div class="metric-desc">Redução de custo operacional</div>
+        </div>
+        <div class="metric reveal reveal-delay-2">
+          <div class="metric-val">-80%</div>
+          <div class="metric-desc">Menos gasto com anúncios</div>
+        </div>
+        <div class="metric reveal reveal-delay-3">
+          <div class="metric-val">&lt;30s</div>
+          <div class="metric-desc">Tempo médio de resposta ao lead</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MASS DISPATCH DEMO (Remotion-style animation) ═══ -->
+  <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-label reveal">Disparo inteligente</div>
+      <h2 class="sec-title reveal">Milhares de Mensagens, <span style="color:var(--purple-light)">Um Clique</span></h2>
+      <p class="sec-sub reveal">Acompanhe em tempo real seus disparos sendo entregues.</p>
+      <div class="demo-split">
+        <div class="dispatch-demo reveal" id="dispatchDemo">
+          <div class="dispatch-stats">
+            <div class="dispatch-stat">
+              <div class="dispatch-stat-val" style="color:var(--purple-light)"><span class="count-up" data-target="12847" data-speed="80">0</span></div>
+              <div class="dispatch-stat-label">Mensagens Enviadas</div>
+            </div>
+            <div class="dispatch-stat">
+              <div class="dispatch-stat-val" style="color:var(--green)"><span class="count-up" data-target="98.7" data-decimals="1" data-speed="60">0</span>%</div>
+              <div class="dispatch-stat-label">Taxa de Entrega</div>
+            </div>
+            <div class="dispatch-stat">
+              <div class="dispatch-stat-val" style="color:var(--blue)"><span class="count-up" data-target="73.2" data-decimals="1" data-speed="70">0</span>%</div>
+              <div class="dispatch-stat-label">Taxa de Abertura</div>
+            </div>
+          </div>
+          <div id="dispatchList"></div>
+          <div class="dispatch-progress">
+            <div class="dispatch-progress-bar" id="dispatchProgress"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;">
+            <span style="color:var(--text-dimmer);font-size:0.75rem;">Progresso do disparo</span>
+            <span style="color:var(--purple-light);font-size:0.75rem;font-weight:600;" id="dispatchPercent">0%</span>
+          </div>
+        </div>
+        <div class="demo-text reveal">
+          <h3>Disparo segmentado <span style="color:var(--cyan-light)">que realmente funciona</span></h3>
+          <p>Envie mensagens personalizadas para milhares de leads simultaneamente. Cada mensagem é única, cada lead se sente especial.</p>
+          <ul class="demo-features">
+            <li>Personalização por nome e interesse</li>
+            <li>Segmentação por perfil de paciente</li>
+            <li>98.7% de taxa de entrega</li>
+            <li>Agendamento de campanhas</li>
+            <li>Relatórios em tempo real</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="sec">
+    <div class="container">
+      <div class="sec-label reveal">A diferença</div>
+      <h2 class="sec-title reveal">Sua clínica sem vs com Tolki</h2>
+      <p class="sec-sub reveal">Veja o que muda quando você automatiza sua captação.</p>
+      <div class="compare-grid reveal">
+        <div class="compare-col compare-sem">
+          <h3><span aria-hidden="true">😩</span> Sem Tolki</h3>
+          <ul>
+            <li><span class="icon" aria-hidden="true">✕</span> Depende de indicações</li>
+            <li><span class="icon" aria-hidden="true">✕</span> Lead respondido em horas</li>
+            <li><span class="icon" aria-hidden="true">✕</span> R$ 5k/mês em tráfego</li>
+            <li><span class="icon" aria-hidden="true">✕</span> Leads somem sem follow-up</li>
+            <li><span class="icon" aria-hidden="true">✕</span> Faturamento imprevisível</li>
+          </ul>
+        </div>
+        <div class="compare-col compare-com">
+          <h3><span aria-hidden="true">🚀</span> Com Tolki</h3>
+          <ul>
+            <li><span class="icon" aria-hidden="true">✓</span> Pacientes novos todo dia</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Resposta em segundos, 24h</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Captação ativa mais barata</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Follow-up automático infinito</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Previsibilidade total</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SOCIAL PROOF ANIMATED (Remotion-style) ═══ -->
+  <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-label reveal">Resultados reais</div>
+      <h2 class="sec-title reveal">Números que falam por si só</h2>
+      <p class="sec-sub reveal">Média dos primeiros 90 dias dos nossos clientes.</p>
+
+      <!-- Animated counter row -->
+      <div style="text-align:center;margin-bottom:48px;" class="reveal">
+        <span class="count-up" data-target="2847" data-speed="50" style="font-family:'Outfit',sans-serif;font-size:3.5rem;font-weight:800;background:linear-gradient(135deg,var(--purple-light),var(--cyan-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">0</span>
+        <span style="font-size:1.15rem;color:var(--text-dim);margin-left:12px;">empresas já transformaram seus resultados</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="testimonial reveal reveal-delay-1">
+          <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="testimonial-text">"Em 60 dias triplicamos os agendamentos e cortei o tráfego pago pela metade. Hoje minha recepcionista foca no atendimento, não em responder WhatsApp."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" aria-hidden="true">DM</div>
+            <div>
+              <div class="testimonial-name">Dr. Diego M.</div>
+              <div class="testimonial-role">Ortodontista — São Paulo, SP</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial reveal reveal-delay-2">
+          <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="testimonial-text">"Eu perdia 40% dos leads porque demorava para responder. Agora a IA responde na hora e já agenda. Meu faturamento subiu 180% em 3 meses."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" aria-hidden="true">RL</div>
+            <div>
+              <div class="testimonial-name">Dra. Renata L.</div>
+              <div class="testimonial-role">Dermatologista — Belo Horizonte, MG</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial reveal reveal-delay-3">
+          <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="testimonial-text">"A Tolki resolveu meu maior problema: previsibilidade. Hoje sei exatamente quantos pacientes vou atender por semana. Isso mudou tudo na gestão."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" aria-hidden="true">CA</div>
+            <div>
+              <div class="testimonial-name">Dr. Carlos A.</div>
+              <div class="testimonial-role">Fisioterapeuta — Curitiba, PR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INSTITUTIONAL VIDEO (Remotion-style, ~30s) ═══ -->
+  <section class="sec">
+    <div class="container">
+      <div class="sec-label reveal">Conheça a Tolki</div>
+      <h2 class="sec-title reveal">Assista em 30 Segundos</h2>
+      <p class="sec-sub reveal">Entenda como transformamos sua clínica em uma máquina de agendamentos.</p>
+      <div class="inst-video reveal" id="instVideo">
+        <div class="inst-video-grid"></div>
+
+        <!-- Play button overlay -->
+        <div class="inst-play-btn" id="instPlayBtn">
+          <div class="inst-play-icon">▶</div>
+          <div class="inst-play-label">Clique para assistir</div>
+        </div>
+
+        <!-- Scene 1: Logo Reveal (0-5s) -->
+        <div class="inst-scene" id="instScene0">
+          <div class="inst-logo-glow"></div>
+          <div class="inst-logo-text" style="position:relative;z-index:1;">Tolki</div>
+          <div class="inst-logo-sub" style="position:relative;z-index:1;">Automação Inteligente</div>
+        </div>
+
+        <!-- Scene 2: Tagline (5-11s) -->
+        <div class="inst-scene" id="instScene1">
+          <div class="inst-tagline" id="instTagline"></div>
+        </div>
+
+        <!-- Scene 3: Features (11-19s) -->
+        <div class="inst-scene" id="instScene2">
+          <div class="inst-features">
+            <div class="inst-feat" style="transition-delay:0ms">
+              <div class="inst-feat-icon">🎯</div>
+              <div class="inst-feat-title">Captação Ativa</div>
+              <div class="inst-feat-desc">Pacientes novos todo dia, sem anúncios</div>
+            </div>
+            <div class="inst-feat" style="transition-delay:200ms">
+              <div class="inst-feat-icon">🤖</div>
+              <div class="inst-feat-title">IA que Converte</div>
+              <div class="inst-feat-desc">Atendimento 24h que agenda sozinho</div>
+            </div>
+            <div class="inst-feat" style="transition-delay:400ms">
+              <div class="inst-feat-icon">📊</div>
+              <div class="inst-feat-title">CRM Integrado</div>
+              <div class="inst-feat-desc">Gestão completa de leads e pacientes</div>
+            </div>
+            <div class="inst-feat" style="transition-delay:600ms">
+              <div class="inst-feat-icon">🔄</div>
+              <div class="inst-feat-title">Follow-up Infinito</div>
+              <div class="inst-feat-desc">Nenhum lead é perdido, nunca mais</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 4: Stats (19-25s) -->
+        <div class="inst-scene" id="instScene3">
+          <div class="inst-stats">
+            <div class="inst-stat" style="transition-delay:0ms">
+              <div class="inst-stat-val" style="color:var(--purple-light)">+200</div>
+              <div class="inst-stat-label">Clínicas ativas</div>
+            </div>
+            <div class="inst-stat" style="transition-delay:150ms">
+              <div class="inst-stat-val" style="color:var(--green)">98.7%</div>
+              <div class="inst-stat-label">Taxa de entrega</div>
+            </div>
+            <div class="inst-stat" style="transition-delay:300ms">
+              <div class="inst-stat-val" style="color:var(--blue)">3x</div>
+              <div class="inst-stat-label">Mais agendamentos</div>
+            </div>
+            <div class="inst-stat" style="transition-delay:450ms">
+              <div class="inst-stat-val" style="color:var(--cyan-light)">24/7</div>
+              <div class="inst-stat-label">Suporte contínuo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 5: CTA (25-30s) -->
+        <div class="inst-scene" id="instScene4">
+          <div class="inst-cta-title">Comece sua<br><span style="background:linear-gradient(90deg,var(--purple-light),var(--cyan-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">transformação digital</span></div>
+          <button class="inst-cta-btn">Falar com Especialista →</button>
+          <div class="inst-cta-small">Teste grátis por 7 dias • Sem cartão de crédito</div>
+        </div>
+
+        <div class="inst-progress">
+          <div class="inst-progress-bar" id="instProgress"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-label reveal">Dúvidas</div>
+      <h2 class="sec-title reveal">Dúvidas frequentes</h2>
+      <p class="sec-sub reveal">Tudo que você precisa saber antes de começar.</p>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Como funciona a captação ativa?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-a">Nosso sistema proprietário identifica pessoas buscando tratamentos na sua especialidade e inicia o contato via WhatsApp de forma personalizada. É como ter um vendedor trabalhando 24h para encher sua agenda — só que mais barato e mais eficiente que qualquer anúncio.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            A IA realmente é melhor que atendimento humano?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-a">Para a primeira resposta e qualificação, sim. Ela responde em segundos, nunca esquece de fazer follow-up, e está disponível às 23h de domingo. Quando o paciente precisa de atenção especial, a IA transfere para sua equipe com todo o contexto.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Funciona para minha especialidade?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-a">Sim. Atendemos odonto, fisio, nutri, dermato, psico, estética, ortopedia e mais. A IA é configurada com o vocabulário e processos específicos da sua área. Cada clínica tem um setup personalizado.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Em quanto tempo vejo resultados?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-a">Primeiros agendamentos acontecem nos primeiros 15-30 dias. Em 90 dias, você terá um sistema rodando no piloto automático com previsibilidade de faturamento.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Preciso entender de tecnologia?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-a">Zero. A gente configura tudo. Você só precisa atender os pacientes que chegam. Tem suporte dedicado sempre que precisar.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Quanto custa?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-a">Depende do tamanho da sua clínica e dos seus objetivos. A consulta inicial é 100% gratuita — nela analisamos seu caso e apresentamos um plano com investimento e ROI projetado. Sem surpresas.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="final-cta-glow" aria-hidden="true"></div>
+    <div class="container">
+      <div class="final-cta-content reveal">
+        <div class="sec-label">Comece agora</div>
+        <h2>Pronto para parar de<br>perder pacientes?</h2>
+        <p>Cada dia sem um sistema de captação ativa é dinheiro saindo da sua clínica. Fale com um especialista agora e veja como funciona para o seu caso.</p>
+        <button class="cta-primary" aria-label="Quero minha agenda lotada">
+          Quero minha agenda lotada <span aria-hidden="true">→</span>
+        </button>
+        <div class="urgency-badge">
+          <span aria-hidden="true">⚡</span> Restam vagas para onboarding este mês
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>TOLKI SOLUCOES E SISTEMAS LTDA. | CNPJ: 62.124.914/0001-11 | &copy; 2024 Todos os direitos reservados</p>
+  </footer>
+
+  <script>
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    // ═══ SCROLL REVEAL ═══
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // ═══ FAQ ═══
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        document.querySelectorAll('.faq-q').forEach(b => b.setAttribute('aria-expanded', 'false'));
+        if (!wasOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // ═══ PARTICLES ═══
+    (function() {
+      const c = document.getElementById('particles');
+      const n = window.innerWidth < 768 ? 15 : 35;
+      for (let i = 0; i < n; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 16) + 's';
+        p.style.animationDelay = (Math.random() * 12) + 's';
+        p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+        p.style.opacity = 0.1 + Math.random() * 0.3;
+        c.appendChild(p);
+      }
+    })();
+
+    // ═══ HEADER SCROLL ═══
+    window.addEventListener('scroll', () => {
+      document.querySelector('header').style.background =
+        window.scrollY > 60 ? 'rgba(5,5,16,0.9)' : 'rgba(5,5,16,0.7)';
+    }, { passive: true });
+
+    // ═══ COUNT-UP ANIMATION (runs once) ═══
+    const countObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.dataset.counted) {
+          e.target.dataset.counted = 'true';
+          const target = parseFloat(e.target.dataset.target);
+          const decimals = parseInt(e.target.dataset.decimals || '0');
+          const duration = 2000;
+          const start = performance.now();
+          function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = eased * target;
+            if (decimals > 0) {
+              e.target.textContent = current.toFixed(decimals);
+            } else {
+              e.target.textContent = Math.floor(current).toLocaleString('pt-BR');
+            }
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.count-up').forEach(el => countObs.observe(el));
+
+    // ═══ LIVE CHAT SIMULATION — runs ONCE on scroll ═══
+    (function() {
+      const messages = [
+        { text: 'Olá! Vi o anúncio de vocês. Quanto custa uma limpeza?', from: 'user', delay: 800 },
+        { text: null, from: 'bot', typing: 1200 },
+        { text: 'Olá! Bem-vinda à Clínica Sorriso! 😊\n\nNossa limpeza completa custa R$180.\n\nPosso agendar para você?', from: 'bot', delay: 0 },
+        { text: 'Sim! Tem horário amanhã de tarde?', from: 'user', delay: 2000 },
+        { text: null, from: 'bot', typing: 1000 },
+        { text: 'Tenho sim! Horários disponíveis:\n\n🕐 14:00\n🕑 15:30\n🕒 17:00\n\nQual prefere?', from: 'bot', delay: 0 },
+        { text: '15:30 por favor!', from: 'user', delay: 1800 },
+        { text: null, from: 'bot', typing: 800 },
+        { text: 'Agendado! ✅\n\n📅 Amanhã, 15:30\n📍 Clínica Sorriso - Centro\n\nVou enviar um lembrete 1h antes. Até lá! 😄', from: 'bot', delay: 0 },
+      ];
+
+      const container = document.getElementById('chatMessages');
+      const typing = document.getElementById('chatTyping');
+      let chatDone = false;
+
+      const chatObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !chatDone) {
+            chatDone = true;
+            chatObs.disconnect();
+            runChat();
+          }
+        });
+      }, { threshold: 0.3 });
+      chatObs.observe(document.getElementById('chatDemo'));
+
+      async function runChat() {
+        for (const msg of messages) {
+          if (msg.typing) {
+            typing.classList.add('active');
+            await sleep(msg.typing);
+            typing.classList.remove('active');
+            continue;
+          }
+          if (msg.delay) await sleep(msg.delay);
+          const bubble = document.createElement('div');
+          bubble.className = 'chat-bubble ' + msg.from;
+          bubble.textContent = msg.text;
+          container.insertBefore(bubble, typing);
+          await sleep(50);
+          bubble.classList.add('visible');
+          container.scrollTop = container.scrollHeight;
+        }
+        // Done — stays on screen with final state
+      }
+    })();
+
+    // ═══ MASS DISPATCH SIMULATION — runs ONCE on scroll ═══
+    (function() {
+      const contacts = [
+        { name: 'Maria Souza', phone: '(**) *****-1234', color: '#7C3AED' },
+        { name: 'João Lima', phone: '(**) *****-5678', color: '#3B82F6' },
+        { name: 'Ana Paula R.', phone: '(**) *****-9012', color: '#06B6D4' },
+        { name: 'Carlos Dias', phone: '(**) *****-3456', color: '#EC4899' },
+        { name: 'Fernanda Reis', phone: '(**) *****-7890', color: '#7C3AED' },
+        { name: 'Pedro Santos', phone: '(**) *****-2345', color: '#3B82F6' },
+        { name: 'Juliana M.', phone: '(**) *****-6789', color: '#06B6D4' },
+        { name: 'Ricardo O.', phone: '(**) *****-0123', color: '#EC4899' },
+      ];
+
+      const listEl = document.getElementById('dispatchList');
+      const progressBar = document.getElementById('dispatchProgress');
+      const percentEl = document.getElementById('dispatchPercent');
+      let dispatchDone = false;
+
+      // Build rows
+      contacts.forEach((c, i) => {
+        const initials = c.name.split(' ').map(w => w[0]).join('');
+        const row = document.createElement('div');
+        row.className = 'dispatch-row';
+        row.style.transitionDelay = (i * 120) + 'ms';
+        row.innerHTML = `
+          <div class="dispatch-avatar" style="background:linear-gradient(135deg,${c.color},${c.color}88)">${initials}</div>
+          <div class="dispatch-info">
+            <div class="dispatch-name">${c.name}</div>
+            <div class="dispatch-phone">${c.phone}</div>
+          </div>
+          <div class="dispatch-status" id="dStatus${i}">
+            <span style="color:var(--text-dimmer)">Na fila</span>
+          </div>
+        `;
+        listEl.appendChild(row);
+      });
+
+      const dispatchObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !dispatchDone) {
+            dispatchDone = true;
+            dispatchObs.disconnect();
+            runDispatch();
+          }
+        });
+      }, { threshold: 0.2 });
+      dispatchObs.observe(document.getElementById('dispatchDemo'));
+
+      async function runDispatch() {
+        const rows = listEl.querySelectorAll('.dispatch-row');
+
+        // Show rows with stagger
+        rows.forEach((r, i) => {
+          setTimeout(() => r.classList.add('visible'), i * 150);
+        });
+        await sleep(contacts.length * 150 + 300);
+
+        // Send messages one by one
+        for (let i = 0; i < contacts.length; i++) {
+          const statusEl = document.getElementById('dStatus' + i);
+          statusEl.innerHTML = '<div class="dispatch-spinner"></div><span class="dispatch-sending">Enviando...</span>';
+          await sleep(600 + Math.random() * 400);
+          statusEl.innerHTML = '<span class="dispatch-check">✓✓</span><span class="dispatch-check">Enviado</span>';
+          const pct = Math.round(((i + 1) / contacts.length) * 100);
+          progressBar.style.width = pct + '%';
+          percentEl.textContent = pct + '%';
+        }
+        // Done — stays on screen with final state (100% complete)
+      }
+    })();
+
+    // ═══ INSTITUTIONAL VIDEO — 30s timeline, runs on click ═══
+    (function() {
+      const scenes = [
+        { id: 'instScene0', start: 0, end: 5000 },
+        { id: 'instScene1', start: 5000, end: 11000 },
+        { id: 'instScene2', start: 11000, end: 19000 },
+        { id: 'instScene3', start: 19000, end: 25000 },
+        { id: 'instScene4', start: 25000, end: 30000 },
+      ];
+      const totalDuration = 30000;
+      const progressBar = document.getElementById('instProgress');
+      const playBtn = document.getElementById('instPlayBtn');
+      let videoPlayed = false;
+
+      // Build tagline words with staggered delays
+      const tagline = 'Transforme sua clínica em uma máquina de agendamentos';
+      const highlights = ['clínica', 'máquina', 'agendamentos'];
+      const taglineEl = document.getElementById('instTagline');
+      tagline.split(' ').forEach((word, i) => {
+        const span = document.createElement('span');
+        span.className = 'inst-word' + (highlights.includes(word) ? ' inst-word-highlight' : '');
+        span.style.transitionDelay = (i * 120) + 'ms';
+        span.textContent = word;
+        taglineEl.appendChild(span);
+      });
+
+      playBtn.addEventListener('click', () => {
+        if (videoPlayed) return;
+        videoPlayed = true;
+        playBtn.style.opacity = '0';
+        playBtn.style.pointerEvents = 'none';
+        setTimeout(() => { playBtn.style.display = 'none'; }, 500);
+        runVideo();
+      });
+
+      async function runVideo() {
+        const startTime = performance.now();
+
+        // Progress bar update loop
+        function updateProgress() {
+          const elapsed = performance.now() - startTime;
+          const pct = Math.min((elapsed / totalDuration) * 100, 100);
+          progressBar.style.width = pct + '%';
+          if (pct < 100) requestAnimationFrame(updateProgress);
+        }
+        requestAnimationFrame(updateProgress);
+
+        // Play scenes sequentially
+        for (let i = 0; i < scenes.length; i++) {
+          const scene = scenes[i];
+          const sceneEl = document.getElementById(scene.id);
+          const duration = scene.end - scene.start;
+
+          // Activate current scene
+          sceneEl.classList.add('active');
+
+          // Wait for scene duration
+          await sleep(duration);
+
+          // Deactivate (except last scene which stays)
+          if (i < scenes.length - 1) {
+            sceneEl.classList.remove('active');
+            // Small gap for transition
+            await sleep(200);
+          }
+        }
+        // Last scene stays visible
+      }
+    })();
+  </script>
+</body>
+</html>
