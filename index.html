@@ -586,6 +586,157 @@
       .metrics-row { grid-template-columns: 1fr; }
     }
 
+    /* ═══ INSTITUTIONAL VIDEO ═══ */
+    .inst-video {
+      max-width: 900px; margin: 0 auto;
+      border-radius: 24px; overflow: hidden;
+      background: linear-gradient(135deg, rgba(10,10,26,0.95), rgba(26,5,51,0.95));
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+      position: relative; aspect-ratio: 16/9;
+    }
+    .inst-video-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .inst-scene {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px;
+      opacity: 0; transform: scale(0.92);
+      transition: opacity 800ms cubic-bezier(.4,0,.2,1), transform 800ms cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+    }
+    .inst-scene.active {
+      opacity: 1; transform: scale(1);
+      pointer-events: auto;
+    }
+    .inst-logo-text {
+      font-family: 'Outfit', sans-serif; font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--purple-light), var(--blue), var(--cyan-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      opacity: 0; transform: scale(0.4);
+      transition: opacity 1s, transform 1s cubic-bezier(.17,.67,.35,1.5);
+    }
+    .inst-scene.active .inst-logo-text { opacity: 1; transform: scale(1); }
+    .inst-logo-sub {
+      font-size: clamp(0.8rem, 2vw, 1.2rem); color: rgba(255,255,255,0.5);
+      letter-spacing: 5px; text-transform: uppercase; margin-top: 8px;
+      opacity: 0; transition: opacity 800ms 400ms;
+    }
+    .inst-scene.active .inst-logo-sub { opacity: 1; }
+    .inst-logo-glow {
+      position: absolute; width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.25), transparent 70%);
+      filter: blur(60px); z-index: 0;
+      animation: instGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes instGlow { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+    .inst-tagline {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.8rem); font-weight: 800;
+      text-align: center; line-height: 1.35; max-width: 700px;
+    }
+    .inst-word {
+      display: inline-block; margin-right: 10px;
+      opacity: 0; transform: translateY(25px);
+      transition: opacity 400ms, transform 400ms cubic-bezier(.4,0,.2,1);
+    }
+    .inst-scene.active .inst-word { opacity: 1; transform: translateY(0); }
+    .inst-word-highlight { color: var(--purple-light); }
+
+    .inst-features {
+      display: flex; flex-wrap: wrap; gap: 20px;
+      justify-content: center; max-width: 700px;
+    }
+    .inst-feat {
+      width: 280px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 24px; text-align: center;
+      opacity: 0; transform: translateY(40px) scale(0.9);
+      transition: opacity 500ms, transform 500ms cubic-bezier(.4,0,.2,1);
+    }
+    .inst-scene.active .inst-feat { opacity: 1; transform: translateY(0) scale(1); }
+    .inst-feat-icon { font-size: 2rem; margin-bottom: 8px; }
+    .inst-feat-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
+    .inst-feat-desc { color: var(--text-dim); font-size: 0.85rem; }
+
+    .inst-stats {
+      display: flex; gap: 48px; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .inst-stat {
+      text-align: center;
+      opacity: 0; transform: scale(0.5);
+      transition: opacity 600ms, transform 600ms cubic-bezier(.17,.67,.35,1.5);
+    }
+    .inst-scene.active .inst-stat { opacity: 1; transform: scale(1); }
+    .inst-stat-val {
+      font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+    }
+    .inst-stat-label { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 4px; }
+
+    .inst-cta-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.6rem); font-weight: 800;
+      text-align: center; margin-bottom: 24px;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 600ms, transform 600ms;
+    }
+    .inst-scene.active .inst-cta-title { opacity: 1; transform: translateY(0); }
+    .inst-cta-btn {
+      background: linear-gradient(135deg, var(--orange), var(--red));
+      padding: 16px 40px; border-radius: 14px; border: none;
+      color: #fff; font-size: 1.2rem; font-weight: 700;
+      font-family: 'Outfit', sans-serif; cursor: pointer;
+      box-shadow: 0 0 40px rgba(249,115,22,0.4);
+      opacity: 0; transform: scale(0.6);
+      transition: opacity 500ms 300ms, transform 500ms 300ms cubic-bezier(.17,.67,.35,1.5);
+    }
+    .inst-scene.active .inst-cta-btn { opacity: 1; transform: scale(1); }
+    .inst-cta-small {
+      color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-top: 14px;
+      opacity: 0; transition: opacity 500ms 500ms;
+    }
+    .inst-scene.active .inst-cta-small { opacity: 1; }
+
+    .inst-progress {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: rgba(255,255,255,0.05);
+    }
+    .inst-progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--purple), var(--blue), var(--cyan));
+      transition: width 100ms linear;
+    }
+    .inst-play-btn {
+      position: absolute; inset: 0; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.4); cursor: pointer;
+      transition: background 300ms;
+    }
+    .inst-play-btn:hover { background: rgba(0,0,0,0.2); }
+    .inst-play-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; box-shadow: 0 0 40px rgba(124,58,237,0.5);
+      transition: transform 300ms;
+    }
+    .inst-play-btn:hover .inst-play-icon { transform: scale(1.1); }
+    .inst-play-label {
+      color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
     /* ═══ ACCESSIBILITY ═══ */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -892,8 +1043,97 @@
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- ═══ INSTITUTIONAL VIDEO (Remotion-style, ~30s) ═══ -->
   <section class="sec">
+    <div class="container">
+      <div class="sec-label reveal">Conheça a Tolki</div>
+      <h2 class="sec-title reveal">Assista em 30 Segundos</h2>
+      <p class="sec-sub reveal">Entenda como transformamos sua clínica em uma máquina de agendamentos.</p>
+      <div class="inst-video reveal" id="instVideo">
+        <div class="inst-video-grid"></div>
+
+        <!-- Play button overlay -->
+        <div class="inst-play-btn" id="instPlayBtn">
+          <div class="inst-play-icon">▶</div>
+          <div class="inst-play-label">Clique para assistir</div>
+        </div>
+
+        <!-- Scene 1: Logo Reveal (0-5s) -->
+        <div class="inst-scene" id="instScene0">
+          <div class="inst-logo-glow"></div>
+          <div class="inst-logo-text" style="position:relative;z-index:1;">Tolki</div>
+          <div class="inst-logo-sub" style="position:relative;z-index:1;">Automação Inteligente</div>
+        </div>
+
+        <!-- Scene 2: Tagline (5-11s) -->
+        <div class="inst-scene" id="instScene1">
+          <div class="inst-tagline" id="instTagline"></div>
+        </div>
+
+        <!-- Scene 3: Features (11-19s) -->
+        <div class="inst-scene" id="instScene2">
+          <div class="inst-features">
+            <div class="inst-feat" style="transition-delay:0ms">
+              <div class="inst-feat-icon">🎯</div>
+              <div class="inst-feat-title">Captação Ativa</div>
+              <div class="inst-feat-desc">Pacientes novos todo dia, sem anúncios</div>
+            </div>
+            <div class="inst-feat" style="transition-delay:200ms">
+              <div class="inst-feat-icon">🤖</div>
+              <div class="inst-feat-title">IA que Converte</div>
+              <div class="inst-feat-desc">Atendimento 24h que agenda sozinho</div>
+            </div>
+            <div class="inst-feat" style="transition-delay:400ms">
+              <div class="inst-feat-icon">📊</div>
+              <div class="inst-feat-title">CRM Integrado</div>
+              <div class="inst-feat-desc">Gestão completa de leads e pacientes</div>
+            </div>
+            <div class="inst-feat" style="transition-delay:600ms">
+              <div class="inst-feat-icon">🔄</div>
+              <div class="inst-feat-title">Follow-up Infinito</div>
+              <div class="inst-feat-desc">Nenhum lead é perdido, nunca mais</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 4: Stats (19-25s) -->
+        <div class="inst-scene" id="instScene3">
+          <div class="inst-stats">
+            <div class="inst-stat" style="transition-delay:0ms">
+              <div class="inst-stat-val" style="color:var(--purple-light)">+200</div>
+              <div class="inst-stat-label">Clínicas ativas</div>
+            </div>
+            <div class="inst-stat" style="transition-delay:150ms">
+              <div class="inst-stat-val" style="color:var(--green)">98.7%</div>
+              <div class="inst-stat-label">Taxa de entrega</div>
+            </div>
+            <div class="inst-stat" style="transition-delay:300ms">
+              <div class="inst-stat-val" style="color:var(--blue)">3x</div>
+              <div class="inst-stat-label">Mais agendamentos</div>
+            </div>
+            <div class="inst-stat" style="transition-delay:450ms">
+              <div class="inst-stat-val" style="color:var(--cyan-light)">24/7</div>
+              <div class="inst-stat-label">Suporte contínuo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 5: CTA (25-30s) -->
+        <div class="inst-scene" id="instScene4">
+          <div class="inst-cta-title">Comece sua<br><span style="background:linear-gradient(90deg,var(--purple-light),var(--cyan-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">transformação digital</span></div>
+          <button class="inst-cta-btn">Falar com Especialista →</button>
+          <div class="inst-cta-small">Teste grátis por 7 dias • Sem cartão de crédito</div>
+        </div>
+
+        <div class="inst-progress">
+          <div class="inst-progress-bar" id="instProgress"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec sec-alt">
     <div class="container">
       <div class="sec-label reveal">Dúvidas</div>
       <h2 class="sec-title reveal">Dúvidas frequentes</h2>
@@ -969,6 +1209,8 @@
   </footer>
 
   <script>
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
     // ═══ SCROLL REVEAL ═══
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -1011,14 +1253,13 @@
         window.scrollY > 60 ? 'rgba(5,5,16,0.9)' : 'rgba(5,5,16,0.7)';
     }, { passive: true });
 
-    // ═══ COUNT-UP ANIMATION ═══
+    // ═══ COUNT-UP ANIMATION (runs once) ═══
     const countObs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting && !e.target.dataset.counted) {
           e.target.dataset.counted = 'true';
           const target = parseFloat(e.target.dataset.target);
           const decimals = parseInt(e.target.dataset.decimals || '0');
-          const speed = parseInt(e.target.dataset.speed || '60');
           const duration = 2000;
           const start = performance.now();
           function tick(now) {
@@ -1039,7 +1280,7 @@
     }, { threshold: 0.3 });
     document.querySelectorAll('.count-up').forEach(el => countObs.observe(el));
 
-    // ═══ LIVE CHAT SIMULATION (Remotion-inspired) ═══
+    // ═══ LIVE CHAT SIMULATION — runs ONCE on scroll ═══
     (function() {
       const messages = [
         { text: 'Olá! Vi o anúncio de vocês. Quanto custa uma limpeza?', from: 'user', delay: 800 },
@@ -1055,12 +1296,13 @@
 
       const container = document.getElementById('chatMessages');
       const typing = document.getElementById('chatTyping');
-      let chatStarted = false;
+      let chatDone = false;
 
       const chatObs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
-          if (e.isIntersecting && !chatStarted) {
-            chatStarted = true;
+          if (e.isIntersecting && !chatDone) {
+            chatDone = true;
+            chatObs.disconnect();
             runChat();
           }
         });
@@ -1084,17 +1326,11 @@
           bubble.classList.add('visible');
           container.scrollTop = container.scrollHeight;
         }
-        // Loop after pause
-        await sleep(4000);
-        container.querySelectorAll('.chat-bubble').forEach(b => b.remove());
-        chatStarted = false;
-        runChat();
+        // Done — stays on screen with final state
       }
-
-      function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
     })();
 
-    // ═══ MASS DISPATCH SIMULATION (Remotion-inspired) ═══
+    // ═══ MASS DISPATCH SIMULATION — runs ONCE on scroll ═══
     (function() {
       const contacts = [
         { name: 'Maria Souza', phone: '(**) *****-1234', color: '#7C3AED' },
@@ -1110,7 +1346,7 @@
       const listEl = document.getElementById('dispatchList');
       const progressBar = document.getElementById('dispatchProgress');
       const percentEl = document.getElementById('dispatchPercent');
-      let dispatchStarted = false;
+      let dispatchDone = false;
 
       // Build rows
       contacts.forEach((c, i) => {
@@ -1133,8 +1369,9 @@
 
       const dispatchObs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
-          if (e.isIntersecting && !dispatchStarted) {
-            dispatchStarted = true;
+          if (e.isIntersecting && !dispatchDone) {
+            dispatchDone = true;
+            dispatchObs.disconnect();
             runDispatch();
           }
         });
@@ -1148,7 +1385,6 @@
         rows.forEach((r, i) => {
           setTimeout(() => r.classList.add('visible'), i * 150);
         });
-
         await sleep(contacts.length * 150 + 300);
 
         // Send messages one by one
@@ -1161,21 +1397,78 @@
           progressBar.style.width = pct + '%';
           percentEl.textContent = pct + '%';
         }
-
-        // Wait then reset
-        await sleep(4000);
-        rows.forEach(r => r.classList.remove('visible'));
-        progressBar.style.width = '0%';
-        percentEl.textContent = '0%';
-        for (let i = 0; i < contacts.length; i++) {
-          document.getElementById('dStatus' + i).innerHTML = '<span style="color:var(--text-dimmer)">Na fila</span>';
-        }
-        await sleep(1000);
-        dispatchStarted = false;
-        runDispatch();
+        // Done — stays on screen with final state (100% complete)
       }
+    })();
 
-      function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    // ═══ INSTITUTIONAL VIDEO — 30s timeline, runs on click ═══
+    (function() {
+      const scenes = [
+        { id: 'instScene0', start: 0, end: 5000 },
+        { id: 'instScene1', start: 5000, end: 11000 },
+        { id: 'instScene2', start: 11000, end: 19000 },
+        { id: 'instScene3', start: 19000, end: 25000 },
+        { id: 'instScene4', start: 25000, end: 30000 },
+      ];
+      const totalDuration = 30000;
+      const progressBar = document.getElementById('instProgress');
+      const playBtn = document.getElementById('instPlayBtn');
+      let videoPlayed = false;
+
+      // Build tagline words with staggered delays
+      const tagline = 'Transforme sua clínica em uma máquina de agendamentos';
+      const highlights = ['clínica', 'máquina', 'agendamentos'];
+      const taglineEl = document.getElementById('instTagline');
+      tagline.split(' ').forEach((word, i) => {
+        const span = document.createElement('span');
+        span.className = 'inst-word' + (highlights.includes(word) ? ' inst-word-highlight' : '');
+        span.style.transitionDelay = (i * 120) + 'ms';
+        span.textContent = word;
+        taglineEl.appendChild(span);
+      });
+
+      playBtn.addEventListener('click', () => {
+        if (videoPlayed) return;
+        videoPlayed = true;
+        playBtn.style.opacity = '0';
+        playBtn.style.pointerEvents = 'none';
+        setTimeout(() => { playBtn.style.display = 'none'; }, 500);
+        runVideo();
+      });
+
+      async function runVideo() {
+        const startTime = performance.now();
+
+        // Progress bar update loop
+        function updateProgress() {
+          const elapsed = performance.now() - startTime;
+          const pct = Math.min((elapsed / totalDuration) * 100, 100);
+          progressBar.style.width = pct + '%';
+          if (pct < 100) requestAnimationFrame(updateProgress);
+        }
+        requestAnimationFrame(updateProgress);
+
+        // Play scenes sequentially
+        for (let i = 0; i < scenes.length; i++) {
+          const scene = scenes[i];
+          const sceneEl = document.getElementById(scene.id);
+          const duration = scene.end - scene.start;
+
+          // Activate current scene
+          sceneEl.classList.add('active');
+
+          // Wait for scene duration
+          await sleep(duration);
+
+          // Deactivate (except last scene which stays)
+          if (i < scenes.length - 1) {
+            sceneEl.classList.remove('active');
+            // Small gap for transition
+            await sleep(200);
+          }
+        }
+        // Last scene stays visible
+      }
     })();
   </script>
 </body>
