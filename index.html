@@ -343,6 +343,136 @@
     .testimonial-name { font-weight: 600; font-size: 0.95rem; }
     .testimonial-role { font-size: 0.8rem; color: var(--text-dimmer); }
 
+    /* ═══ LIVE CHAT SIMULATION ═══ */
+    .chat-demo {
+      max-width: 480px; margin: 0 auto;
+      border-radius: 24px; overflow: hidden;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+      backdrop-filter: blur(20px);
+    }
+    .chat-header {
+      background: linear-gradient(90deg, rgba(124,58,237,0.25), rgba(59,130,246,0.25));
+      padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .chat-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem; flex-shrink: 0;
+    }
+    .chat-name { font-weight: 700; font-family: 'Outfit', sans-serif; font-size: 0.95rem; }
+    .chat-status { font-size: 0.75rem; color: var(--text-dimmer); display: flex; align-items: center; gap: 6px; }
+    .chat-online-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: badgePulse 2s infinite; }
+    .chat-messages { padding: 20px 16px; min-height: 360px; position: relative; }
+    .chat-bubble {
+      max-width: 85%; padding: 12px 16px; border-radius: 16px;
+      font-size: 0.9rem; line-height: 1.55; margin-bottom: 10px;
+      opacity: 0; transform: scale(0.6) translateY(10px);
+      transition: opacity 400ms cubic-bezier(.4,0,.2,1), transform 400ms cubic-bezier(.4,0,.2,1);
+      white-space: pre-line;
+    }
+    .chat-bubble.visible { opacity: 1; transform: scale(1) translateY(0); }
+    .chat-bubble.bot {
+      background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.25);
+      border-bottom-left-radius: 4px; margin-right: auto;
+    }
+    .chat-bubble.user {
+      background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.25);
+      border-bottom-right-radius: 4px; margin-left: auto;
+    }
+    .chat-typing { display: flex; gap: 4px; padding: 12px 16px; opacity: 0; transition: opacity 300ms; }
+    .chat-typing.active { opacity: 1; }
+    .chat-typing-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      animation: typingBounce 1.4s infinite;
+    }
+    .chat-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    /* ═══ DISPATCH SIMULATION ═══ */
+    .dispatch-demo {
+      max-width: 600px; margin: 0 auto;
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px; backdrop-filter: blur(12px);
+    }
+    .dispatch-stats {
+      display: flex; justify-content: center; gap: 36px;
+      margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .dispatch-stat { text-align: center; }
+    .dispatch-stat-val {
+      font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800;
+    }
+    .dispatch-stat-label { font-size: 0.75rem; color: var(--text-dimmer); margin-top: 2px; }
+    .dispatch-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; border-radius: 12px;
+      background: rgba(255,255,255,0.02); margin-bottom: 6px;
+      border: 1px solid rgba(255,255,255,0.04);
+      opacity: 0; transform: translateX(-40px);
+      transition: opacity 500ms, transform 500ms;
+    }
+    .dispatch-row.visible { opacity: 1; transform: translateX(0); }
+    .dispatch-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+    }
+    .dispatch-info { flex: 1; }
+    .dispatch-name { font-size: 0.85rem; font-weight: 600; font-family: 'Outfit', sans-serif; }
+    .dispatch-phone { font-size: 0.75rem; color: var(--text-dimmer); }
+    .dispatch-status { font-size: 0.7rem; display: flex; align-items: center; gap: 4px; }
+    .dispatch-check { color: var(--green); }
+    .dispatch-sending { color: var(--purple-light); }
+    .dispatch-spinner {
+      width: 14px; height: 14px; border: 2px solid rgba(124,58,237,0.25);
+      border-top-color: var(--purple); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .dispatch-progress {
+      margin-top: 16px; height: 5px; border-radius: 3px;
+      background: rgba(255,255,255,0.05); overflow: hidden;
+    }
+    .dispatch-progress-bar {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--blue), var(--cyan));
+      width: 0%; transition: width 100ms linear;
+    }
+
+    /* ═══ DEMO LAYOUT ═══ */
+    .demo-split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      align-items: center; max-width: 1100px; margin: 0 auto;
+    }
+    .demo-text { }
+    .demo-text h3 {
+      font-size: 1.6rem; font-weight: 700; margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+    .demo-text p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.75; margin-bottom: 16px; }
+    .demo-features { list-style: none; }
+    .demo-features li {
+      padding: 8px 0; font-size: 0.9rem; color: var(--text-dim);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .demo-features li::before {
+      content: '✓'; color: var(--green); font-weight: 700; font-size: 0.85rem;
+    }
+    @media (max-width: 768px) {
+      .demo-split { grid-template-columns: 1fr; gap: 32px; }
+      .demo-text { order: 1; text-align: center; }
+      .demo-features { display: inline-block; text-align: left; }
+    }
+
     /* ═══ FAQ ═══ */
     .faq-list { max-width: 720px; margin: 0 auto; }
     .faq-item {
@@ -435,6 +565,11 @@
       100% { transform: translateY(-10vh) scale(1); opacity: 0; }
     }
 
+    /* ═══ COUNTER ANIMATION ═══ */
+    .count-up {
+      font-family: 'Outfit', sans-serif; font-weight: 800;
+    }
+
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
       .sec { padding: 72px 0; }
@@ -444,6 +579,8 @@
       .metrics-row { grid-template-columns: repeat(2, 1fr); }
       .hero h1 { letter-spacing: -0.5px; }
       .cta-primary { padding: 16px 32px; font-size: 1rem; }
+      .dispatch-stats { gap: 20px; }
+      .dispatch-stat-val { font-size: 1.5rem; }
     }
     @media (max-width: 480px) {
       .metrics-row { grid-template-columns: 1fr; }
@@ -543,8 +680,45 @@
     </div>
   </section>
 
-  <!-- METHOD -->
+  <!-- ═══ LIVE CHAT DEMO (Remotion-style animation) ═══ -->
   <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-label reveal">Veja em ação</div>
+      <h2 class="sec-title reveal">Sua IA Atendendo em Tempo Real</h2>
+      <p class="sec-sub reveal">Veja como a IA Tolki converte um lead em agendamento em segundos.</p>
+      <div class="demo-split">
+        <div class="demo-text reveal">
+          <h3>Atendimento instantâneo, <span style="color:var(--purple-light)">24 horas por dia</span></h3>
+          <p>Enquanto você dorme, a IA Tolki responde cada lead em segundos, tira dúvidas, quebra objeções e agenda consultas automaticamente.</p>
+          <ul class="demo-features">
+            <li>Resposta em menos de 5 segundos</li>
+            <li>Entende linguagem natural do paciente</li>
+            <li>Agenda diretamente no seu sistema</li>
+            <li>Transfere para humano quando necessário</li>
+          </ul>
+        </div>
+        <div class="chat-demo reveal" id="chatDemo">
+          <div class="chat-header">
+            <div class="chat-avatar">T</div>
+            <div>
+              <div class="chat-name">Tolki Assistente</div>
+              <div class="chat-status"><span class="chat-online-dot"></span> Online agora</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-typing" id="chatTyping">
+              <div class="chat-typing-dot"></div>
+              <div class="chat-typing-dot"></div>
+              <div class="chat-typing-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section class="sec">
     <div class="container">
       <div class="sec-label reveal">A solução</div>
       <h2 class="sec-title reveal">O Método Tolki</h2>
@@ -590,6 +764,52 @@
     </div>
   </section>
 
+  <!-- ═══ MASS DISPATCH DEMO (Remotion-style animation) ═══ -->
+  <section class="sec sec-alt">
+    <div class="container">
+      <div class="sec-label reveal">Disparo inteligente</div>
+      <h2 class="sec-title reveal">Milhares de Mensagens, <span style="color:var(--purple-light)">Um Clique</span></h2>
+      <p class="sec-sub reveal">Acompanhe em tempo real seus disparos sendo entregues.</p>
+      <div class="demo-split">
+        <div class="dispatch-demo reveal" id="dispatchDemo">
+          <div class="dispatch-stats">
+            <div class="dispatch-stat">
+              <div class="dispatch-stat-val" style="color:var(--purple-light)"><span class="count-up" data-target="12847" data-speed="80">0</span></div>
+              <div class="dispatch-stat-label">Mensagens Enviadas</div>
+            </div>
+            <div class="dispatch-stat">
+              <div class="dispatch-stat-val" style="color:var(--green)"><span class="count-up" data-target="98.7" data-decimals="1" data-speed="60">0</span>%</div>
+              <div class="dispatch-stat-label">Taxa de Entrega</div>
+            </div>
+            <div class="dispatch-stat">
+              <div class="dispatch-stat-val" style="color:var(--blue)"><span class="count-up" data-target="73.2" data-decimals="1" data-speed="70">0</span>%</div>
+              <div class="dispatch-stat-label">Taxa de Abertura</div>
+            </div>
+          </div>
+          <div id="dispatchList"></div>
+          <div class="dispatch-progress">
+            <div class="dispatch-progress-bar" id="dispatchProgress"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;">
+            <span style="color:var(--text-dimmer);font-size:0.75rem;">Progresso do disparo</span>
+            <span style="color:var(--purple-light);font-size:0.75rem;font-weight:600;" id="dispatchPercent">0%</span>
+          </div>
+        </div>
+        <div class="demo-text reveal">
+          <h3>Disparo segmentado <span style="color:var(--cyan-light)">que realmente funciona</span></h3>
+          <p>Envie mensagens personalizadas para milhares de leads simultaneamente. Cada mensagem é única, cada lead se sente especial.</p>
+          <ul class="demo-features">
+            <li>Personalização por nome e interesse</li>
+            <li>Segmentação por perfil de paciente</li>
+            <li>98.7% de taxa de entrega</li>
+            <li>Agendamento de campanhas</li>
+            <li>Relatórios em tempo real</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- COMPARISON -->
   <section class="sec">
     <div class="container">
@@ -621,12 +841,19 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
+  <!-- ═══ SOCIAL PROOF ANIMATED (Remotion-style) ═══ -->
   <section class="sec sec-alt">
     <div class="container">
       <div class="sec-label reveal">Resultados reais</div>
       <h2 class="sec-title reveal">Números que falam por si só</h2>
       <p class="sec-sub reveal">Média dos primeiros 90 dias dos nossos clientes.</p>
+
+      <!-- Animated counter row -->
+      <div style="text-align:center;margin-bottom:48px;" class="reveal">
+        <span class="count-up" data-target="2847" data-speed="50" style="font-family:'Outfit',sans-serif;font-size:3.5rem;font-weight:800;background:linear-gradient(135deg,var(--purple-light),var(--cyan-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">0</span>
+        <span style="font-size:1.15rem;color:var(--text-dim);margin-left:12px;">empresas já transformaram seus resultados</span>
+      </div>
+
       <div class="grid-3">
         <div class="testimonial reveal reveal-delay-1">
           <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
@@ -742,13 +969,13 @@
   </footer>
 
   <script>
-    // Scroll reveal
+    // ═══ SCROLL REVEAL ═══
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // FAQ
+    // ═══ FAQ ═══
     document.querySelectorAll('.faq-q').forEach(btn => {
       btn.addEventListener('click', () => {
         const item = btn.parentElement;
@@ -762,7 +989,7 @@
       });
     });
 
-    // Particles
+    // ═══ PARTICLES ═══
     (function() {
       const c = document.getElementById('particles');
       const n = window.innerWidth < 768 ? 15 : 35;
@@ -778,11 +1005,178 @@
       }
     })();
 
-    // Header scroll
+    // ═══ HEADER SCROLL ═══
     window.addEventListener('scroll', () => {
       document.querySelector('header').style.background =
         window.scrollY > 60 ? 'rgba(5,5,16,0.9)' : 'rgba(5,5,16,0.7)';
     }, { passive: true });
+
+    // ═══ COUNT-UP ANIMATION ═══
+    const countObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.dataset.counted) {
+          e.target.dataset.counted = 'true';
+          const target = parseFloat(e.target.dataset.target);
+          const decimals = parseInt(e.target.dataset.decimals || '0');
+          const speed = parseInt(e.target.dataset.speed || '60');
+          const duration = 2000;
+          const start = performance.now();
+          function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = eased * target;
+            if (decimals > 0) {
+              e.target.textContent = current.toFixed(decimals);
+            } else {
+              e.target.textContent = Math.floor(current).toLocaleString('pt-BR');
+            }
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.count-up').forEach(el => countObs.observe(el));
+
+    // ═══ LIVE CHAT SIMULATION (Remotion-inspired) ═══
+    (function() {
+      const messages = [
+        { text: 'Olá! Vi o anúncio de vocês. Quanto custa uma limpeza?', from: 'user', delay: 800 },
+        { text: null, from: 'bot', typing: 1200 },
+        { text: 'Olá! Bem-vinda à Clínica Sorriso! 😊\n\nNossa limpeza completa custa R$180.\n\nPosso agendar para você?', from: 'bot', delay: 0 },
+        { text: 'Sim! Tem horário amanhã de tarde?', from: 'user', delay: 2000 },
+        { text: null, from: 'bot', typing: 1000 },
+        { text: 'Tenho sim! Horários disponíveis:\n\n🕐 14:00\n🕑 15:30\n🕒 17:00\n\nQual prefere?', from: 'bot', delay: 0 },
+        { text: '15:30 por favor!', from: 'user', delay: 1800 },
+        { text: null, from: 'bot', typing: 800 },
+        { text: 'Agendado! ✅\n\n📅 Amanhã, 15:30\n📍 Clínica Sorriso - Centro\n\nVou enviar um lembrete 1h antes. Até lá! 😄', from: 'bot', delay: 0 },
+      ];
+
+      const container = document.getElementById('chatMessages');
+      const typing = document.getElementById('chatTyping');
+      let chatStarted = false;
+
+      const chatObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !chatStarted) {
+            chatStarted = true;
+            runChat();
+          }
+        });
+      }, { threshold: 0.3 });
+      chatObs.observe(document.getElementById('chatDemo'));
+
+      async function runChat() {
+        for (const msg of messages) {
+          if (msg.typing) {
+            typing.classList.add('active');
+            await sleep(msg.typing);
+            typing.classList.remove('active');
+            continue;
+          }
+          if (msg.delay) await sleep(msg.delay);
+          const bubble = document.createElement('div');
+          bubble.className = 'chat-bubble ' + msg.from;
+          bubble.textContent = msg.text;
+          container.insertBefore(bubble, typing);
+          await sleep(50);
+          bubble.classList.add('visible');
+          container.scrollTop = container.scrollHeight;
+        }
+        // Loop after pause
+        await sleep(4000);
+        container.querySelectorAll('.chat-bubble').forEach(b => b.remove());
+        chatStarted = false;
+        runChat();
+      }
+
+      function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    })();
+
+    // ═══ MASS DISPATCH SIMULATION (Remotion-inspired) ═══
+    (function() {
+      const contacts = [
+        { name: 'Maria Souza', phone: '(**) *****-1234', color: '#7C3AED' },
+        { name: 'João Lima', phone: '(**) *****-5678', color: '#3B82F6' },
+        { name: 'Ana Paula R.', phone: '(**) *****-9012', color: '#06B6D4' },
+        { name: 'Carlos Dias', phone: '(**) *****-3456', color: '#EC4899' },
+        { name: 'Fernanda Reis', phone: '(**) *****-7890', color: '#7C3AED' },
+        { name: 'Pedro Santos', phone: '(**) *****-2345', color: '#3B82F6' },
+        { name: 'Juliana M.', phone: '(**) *****-6789', color: '#06B6D4' },
+        { name: 'Ricardo O.', phone: '(**) *****-0123', color: '#EC4899' },
+      ];
+
+      const listEl = document.getElementById('dispatchList');
+      const progressBar = document.getElementById('dispatchProgress');
+      const percentEl = document.getElementById('dispatchPercent');
+      let dispatchStarted = false;
+
+      // Build rows
+      contacts.forEach((c, i) => {
+        const initials = c.name.split(' ').map(w => w[0]).join('');
+        const row = document.createElement('div');
+        row.className = 'dispatch-row';
+        row.style.transitionDelay = (i * 120) + 'ms';
+        row.innerHTML = `
+          <div class="dispatch-avatar" style="background:linear-gradient(135deg,${c.color},${c.color}88)">${initials}</div>
+          <div class="dispatch-info">
+            <div class="dispatch-name">${c.name}</div>
+            <div class="dispatch-phone">${c.phone}</div>
+          </div>
+          <div class="dispatch-status" id="dStatus${i}">
+            <span style="color:var(--text-dimmer)">Na fila</span>
+          </div>
+        `;
+        listEl.appendChild(row);
+      });
+
+      const dispatchObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !dispatchStarted) {
+            dispatchStarted = true;
+            runDispatch();
+          }
+        });
+      }, { threshold: 0.2 });
+      dispatchObs.observe(document.getElementById('dispatchDemo'));
+
+      async function runDispatch() {
+        const rows = listEl.querySelectorAll('.dispatch-row');
+
+        // Show rows with stagger
+        rows.forEach((r, i) => {
+          setTimeout(() => r.classList.add('visible'), i * 150);
+        });
+
+        await sleep(contacts.length * 150 + 300);
+
+        // Send messages one by one
+        for (let i = 0; i < contacts.length; i++) {
+          const statusEl = document.getElementById('dStatus' + i);
+          statusEl.innerHTML = '<div class="dispatch-spinner"></div><span class="dispatch-sending">Enviando...</span>';
+          await sleep(600 + Math.random() * 400);
+          statusEl.innerHTML = '<span class="dispatch-check">✓✓</span><span class="dispatch-check">Enviado</span>';
+          const pct = Math.round(((i + 1) / contacts.length) * 100);
+          progressBar.style.width = pct + '%';
+          percentEl.textContent = pct + '%';
+        }
+
+        // Wait then reset
+        await sleep(4000);
+        rows.forEach(r => r.classList.remove('visible'));
+        progressBar.style.width = '0%';
+        percentEl.textContent = '0%';
+        for (let i = 0; i < contacts.length; i++) {
+          document.getElementById('dStatus' + i).innerHTML = '<span style="color:var(--text-dimmer)">Na fila</span>';
+        }
+        await sleep(1000);
+        dispatchStarted = false;
+        runDispatch();
+      }
+
+      function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    })();
   </script>
 </body>
 </html>
