@@ -3,414 +3,514 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tolki — Sistema de captação inteligente que lota a agenda da sua clínica em 90 dias, sem depender de tráfego pago.">
+  <meta name="description" content="Tolki — O método que já ajudou +200 clínicas a triplicar agendamentos. Captação ativa + IA que converte + follow-up automático.">
   <title>Tolki — Sua Clínica Lotada em 90 Dias</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --primary: #0EA5E9;
-      --primary-dark: #0284C7;
-      --cta: #F97316;
-      --cta-hover: #EA580C;
-      --bg: #0A0E1A;
-      --bg-section: #0F1629;
-      --glass: rgba(255, 255, 255, 0.06);
-      --glass-border: rgba(255, 255, 255, 0.1);
+      --purple: #7C3AED;
+      --purple-light: #A78BFA;
+      --blue: #3B82F6;
+      --cyan: #06B6D4;
+      --cyan-light: #22D3EE;
+      --pink: #EC4899;
+      --orange: #F97316;
+      --orange-dark: #EA580C;
+      --green: #22C55E;
+      --red: #EF4444;
+      --bg: #050510;
+      --bg-card: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.06);
+      --glass-strong: rgba(255,255,255,0.1);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
       --text: #F1F5F9;
-      --text-muted: #94A3B8;
-      --success: #22C55E;
-      --radius: 16px;
+      --text-dim: #94A3B8;
+      --text-dimmer: #64748B;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.65; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-
-    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2; }
-
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; line-height: 1.15; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { position: relative; }
 
-    /* === HEADER === */
-    header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-      backdrop-filter: blur(16px);
-      background: rgba(10, 14, 26, 0.8);
-      border-bottom: 1px solid var(--glass-border);
+    /* ═══ AURORA BACKGROUND ═══ */
+    .aurora {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      overflow: hidden;
     }
-    .header-inner {
+    .aurora-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(120px); opacity: 0.15;
+      animation: auroraMove 20s ease-in-out infinite alternate;
+    }
+    .aurora-blob:nth-child(1) {
+      width: 600px; height: 600px;
+      background: var(--purple);
+      top: -10%; left: -5%;
+    }
+    .aurora-blob:nth-child(2) {
+      width: 500px; height: 500px;
+      background: var(--cyan);
+      top: 30%; right: -10%;
+      animation-delay: -5s;
+      animation-duration: 25s;
+    }
+    .aurora-blob:nth-child(3) {
+      width: 400px; height: 400px;
+      background: var(--blue);
+      bottom: 10%; left: 20%;
+      animation-delay: -10s;
+      animation-duration: 30s;
+    }
+    .aurora-blob:nth-child(4) {
+      width: 350px; height: 350px;
+      background: var(--pink);
+      top: 60%; right: 30%;
+      animation-delay: -15s;
+      animation-duration: 22s;
+    }
+    @keyframes auroraMove {
+      0% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(80px, -60px) scale(1.1); }
+      66% { transform: translate(-40px, 40px) scale(0.95); }
+      100% { transform: translate(60px, 20px) scale(1.05); }
+    }
+
+    /* ═══ GRID OVERLAY ═══ */
+    .grid-overlay {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+    }
+
+    /* ═══ HEADER ═══ */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      backdrop-filter: blur(20px) saturate(1.4);
+      background: rgba(5, 5, 16, 0.7);
+      border-bottom: 1px solid var(--border);
+      transition: background 300ms;
+    }
+    .nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 24px; max-width: 1200px; margin: 0 auto;
+      padding: 14px 24px; max-width: 1200px; margin: 0 auto;
     }
     .logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.5rem; font-weight: 700;
-      background: linear-gradient(135deg, var(--primary), #38BDF8);
+      font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
     }
-    .header-cta {
-      background: var(--cta); color: white; border: none;
-      padding: 10px 24px; border-radius: 8px; font-weight: 600;
-      cursor: pointer; font-size: 0.95rem;
-      transition: background 200ms, transform 200ms;
+    .nav-cta {
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: white; border: none; padding: 10px 24px; border-radius: 10px;
+      font-weight: 600; font-size: 0.9rem; cursor: pointer;
+      transition: transform 200ms, box-shadow 200ms;
+      font-family: 'DM Sans', sans-serif;
     }
-    .header-cta:hover { background: var(--cta-hover); transform: scale(1.03); }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
 
-    /* === HERO === */
+    /* ═══ HERO ═══ */
     .hero {
       min-height: 100vh; display: flex; align-items: center;
-      position: relative; padding-top: 80px;
+      padding: 120px 0 80px; position: relative; z-index: 1;
     }
-    .hero-bg {
-      position: absolute; inset: 0; overflow: hidden; z-index: 0;
-    }
-    .hero-bg .orb {
-      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3;
-      animation: float 8s ease-in-out infinite;
-    }
-    .orb-1 { width: 400px; height: 400px; background: var(--primary); top: 10%; left: 10%; }
-    .orb-2 { width: 300px; height: 300px; background: #7C3AED; bottom: 20%; right: 10%; animation-delay: 3s; }
-    .orb-3 { width: 200px; height: 200px; background: #06B6D4; top: 50%; left: 50%; animation-delay: 5s; }
+    .hero-content { text-align: center; max-width: 850px; margin: 0 auto; }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-30px); }
-    }
-
-    .hero-content {
-      position: relative; z-index: 1; text-align: center;
-      max-width: 800px; margin: 0 auto;
-    }
     .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--glass); border: 1px solid var(--glass-border);
-      padding: 8px 20px; border-radius: 100px; font-size: 0.85rem;
-      color: var(--primary); margin-bottom: 24px;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.15));
+      border: 1px solid rgba(124,58,237,0.3);
+      padding: 8px 20px; border-radius: 100px;
+      font-size: 0.85rem; color: var(--cyan-light);
+      margin-bottom: 28px;
       backdrop-filter: blur(8px);
     }
-    .hero-badge .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--success);
-      animation: pulse 2s infinite;
+    .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+      animation: badgePulse 2s ease-in-out infinite;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+    @keyframes badgePulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--green); }
+      50% { opacity: 0.5; box-shadow: 0 0 4px var(--green); }
     }
+
     .hero h1 {
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 700; margin-bottom: 20px;
+      font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+      margin-bottom: 24px; letter-spacing: -1.5px;
     }
-    .hero h1 .highlight {
-      background: linear-gradient(135deg, var(--primary), #38BDF8);
+    .hero-gradient-text {
+      background: linear-gradient(135deg, var(--purple-light) 0%, var(--cyan-light) 50%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+    }
+
+    .hero-sub {
+      font-size: 1.15rem; color: var(--text-dim);
+      max-width: 640px; margin: 0 auto 40px; line-height: 1.75;
+    }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+
+    .cta-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: white; border: none; padding: 18px 40px; border-radius: 14px;
+      font-size: 1.15rem; font-weight: 700; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: transform 250ms, box-shadow 250ms;
+      box-shadow: 0 4px 30px rgba(249,115,22,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+      position: relative; overflow: hidden;
+    }
+    .cta-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0; transition: opacity 250ms;
+    }
+    .cta-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 40px rgba(249,115,22,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .cta-primary:hover::before { opacity: 1; }
+
+    .trust-row {
+      display: flex; justify-content: center; gap: 40px;
+      margin-top: 56px; flex-wrap: wrap;
+    }
+    .trust-item { text-align: center; min-width: 100px; }
+    .trust-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .hero p {
-      font-size: 1.15rem; color: var(--text-muted);
-      max-width: 600px; margin: 0 auto 32px;
-    }
-    .hero-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--cta); color: white; border: none;
-      padding: 16px 36px; border-radius: 12px;
-      font-size: 1.1rem; font-weight: 600; cursor: pointer;
-      transition: background 200ms, transform 200ms, box-shadow 200ms;
-      box-shadow: 0 4px 24px rgba(249, 115, 22, 0.3);
-    }
-    .hero-cta:hover {
-      background: var(--cta-hover); transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(249, 115, 22, 0.4);
-    }
-    .hero-trust {
-      display: flex; justify-content: center; gap: 48px;
-      margin-top: 48px; flex-wrap: wrap;
-    }
-    .trust-item { text-align: center; }
-    .trust-item .number {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem; font-weight: 700; color: var(--primary);
-    }
-    .trust-item .label { font-size: 0.85rem; color: var(--text-muted); }
+    .trust-label { font-size: 0.8rem; color: var(--text-dimmer); margin-top: 2px; }
 
-    /* === SECTION SHARED === */
-    section { padding: 96px 0; }
-    .section-title {
-      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-      text-align: center; margin-bottom: 16px;
+    /* ═══ SECTION STYLES ═══ */
+    .sec { padding: 100px 0; position: relative; z-index: 1; }
+    .sec-alt { background: rgba(255,255,255,0.015); }
+    .sec-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem); text-align: center;
+      margin-bottom: 12px; font-weight: 700; letter-spacing: -0.5px;
     }
-    .section-subtitle {
-      text-align: center; color: var(--text-muted);
-      max-width: 600px; margin: 0 auto 56px; font-size: 1.05rem;
+    .sec-sub {
+      text-align: center; color: var(--text-dim);
+      max-width: 560px; margin: 0 auto 60px; font-size: 1.05rem;
+    }
+    .sec-label {
+      text-align: center; font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 3px; font-weight: 600; margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
-    /* === PAIN POINTS === */
-    .pain-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+    /* ═══ CARDS ═══ */
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
     }
-    .pain-card {
-      background: var(--glass); border: 1px solid var(--glass-border);
-      border-radius: var(--radius); padding: 32px;
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px;
       backdrop-filter: blur(12px);
-      transition: transform 250ms, border-color 250ms;
+      transition: transform 300ms cubic-bezier(.4,0,.2,1),
+                  border-color 300ms, box-shadow 300ms;
+      position: relative; overflow: hidden;
     }
-    .pain-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(239, 68, 68, 0.3);
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
     }
-    .pain-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: rgba(239, 68, 68, 0.1); display: flex;
-      align-items: center; justify-content: center;
-      font-size: 1.4rem; margin-bottom: 16px;
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
-    .pain-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
-    .pain-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-    /* === SOLUTION === */
-    .solution-section { background: var(--bg-section); }
-    .solution-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+    .card-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
     }
-    .solution-card {
-      background: var(--glass); border: 1px solid var(--glass-border);
-      border-radius: var(--radius); padding: 32px;
-      backdrop-filter: blur(12px);
-      transition: transform 250ms, border-color 250ms;
-    }
-    .solution-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(14, 165, 233, 0.4);
-    }
-    .solution-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: rgba(14, 165, 233, 0.15); display: flex;
-      align-items: center; justify-content: center;
-      font-size: 1.4rem; margin-bottom: 16px;
-    }
-    .solution-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
-    .solution-card p { color: var(--text-muted); font-size: 0.95rem; }
-    .solution-step {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.75rem; font-weight: 600;
-      color: var(--primary); text-transform: uppercase;
-      letter-spacing: 2px; margin-bottom: 12px;
+    .card-icon-red { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.2); }
+    .card-icon-purple { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.25); }
+    .card-icon-blue { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.25); }
+    .card-icon-cyan { background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.25); }
+    .card h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 600; }
+    .card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; }
+    .card-step {
+      font-family: 'Outfit', sans-serif; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 3px; font-weight: 700;
+      color: var(--purple-light); margin-bottom: 14px;
     }
 
-    /* === METRICS === */
-    .metrics {
+    /* ═══ METRICS ═══ */
+    .metrics-row {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px; margin-top: 56px;
+      gap: 20px; margin-top: 64px;
     }
-    .metric-card {
-      text-align: center; padding: 32px;
-      background: var(--glass); border: 1px solid var(--glass-border);
-      border-radius: var(--radius); backdrop-filter: blur(12px);
+    .metric {
+      text-align: center; padding: 32px 20px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; backdrop-filter: blur(12px);
+      position: relative; overflow: hidden;
     }
-    .metric-card .value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.5rem; font-weight: 700;
-      background: linear-gradient(135deg, var(--success), #4ADE80);
+    .metric::after {
+      content: ''; position: absolute; bottom: 0; left: 20%; right: 20%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0.5;
+    }
+    .metric-val {
+      font-family: 'Outfit', sans-serif; font-size: 2.8rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--green), var(--cyan-light));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .metric-card .desc { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+    .metric-desc { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
 
-    /* === COMPARISON === */
-    .comparison {
+    /* ═══ COMPARISON ═══ */
+    .compare-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
       max-width: 900px; margin: 0 auto;
     }
-    @media (max-width: 640px) { .comparison { grid-template-columns: 1fr; } }
-    .compare-col {
-      border-radius: var(--radius); padding: 32px;
-      backdrop-filter: blur(12px);
+    @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-col { border-radius: 20px; padding: 36px; backdrop-filter: blur(12px); }
+    .compare-sem {
+      background: rgba(239,68,68,0.04);
+      border: 1px solid rgba(239,68,68,0.15);
     }
-    .compare-col.before {
-      background: rgba(239, 68, 68, 0.05);
-      border: 1px solid rgba(239, 68, 68, 0.2);
-    }
-    .compare-col.after {
-      background: rgba(34, 197, 94, 0.05);
-      border: 1px solid rgba(34, 197, 94, 0.2);
+    .compare-com {
+      background: rgba(34,197,94,0.04);
+      border: 1px solid rgba(34,197,94,0.15);
     }
     .compare-col h3 {
-      font-size: 1.1rem; margin-bottom: 20px;
-      display: flex; align-items: center; gap: 8px;
+      font-size: 1.15rem; margin-bottom: 24px; font-weight: 700;
+      display: flex; align-items: center; gap: 10px;
     }
     .compare-col ul { list-style: none; }
     .compare-col li {
-      padding: 10px 0; font-size: 0.95rem;
-      border-bottom: 1px solid var(--glass-border);
-      display: flex; align-items: center; gap: 10px;
+      padding: 12px 0; font-size: 0.95rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 12px;
+      color: var(--text-dim);
     }
     .compare-col li:last-child { border-bottom: none; }
-    .compare-col.before li::before { content: "✕"; color: #EF4444; font-weight: 700; }
-    .compare-col.after li::before { content: "✓"; color: #22C55E; font-weight: 700; }
+    .compare-col li .icon { flex-shrink: 0; font-weight: 700; font-size: 1rem; }
+    .compare-sem li .icon { color: var(--red); }
+    .compare-com li .icon { color: var(--green); }
 
-    /* === TESTIMONIALS === */
-    .testimonials-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
+    /* ═══ TESTIMONIALS ═══ */
+    .testimonial {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px; backdrop-filter: blur(12px);
+      transition: transform 300ms, border-color 300ms;
     }
-    .testimonial-card {
-      background: var(--glass); border: 1px solid var(--glass-border);
-      border-radius: var(--radius); padding: 28px;
-      backdrop-filter: blur(12px);
+    .testimonial:hover { transform: translateY(-4px); border-color: var(--border-hover); }
+    .testimonial-stars { color: #FBBF24; font-size: 1rem; letter-spacing: 2px; margin-bottom: 16px; }
+    .testimonial-text {
+      font-size: 0.95rem; color: var(--text-dim);
+      font-style: italic; line-height: 1.8; margin-bottom: 24px;
+      position: relative; padding-left: 20px;
+      border-left: 2px solid rgba(124,58,237,0.3);
     }
-    .testimonial-card .quote {
-      font-size: 0.95rem; color: var(--text-muted);
-      font-style: italic; margin-bottom: 20px; line-height: 1.7;
-    }
-    .testimonial-author {
-      display: flex; align-items: center; gap: 12px;
-    }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
     .testimonial-avatar {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), #7C3AED);
+      width: 46px; height: 46px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
       display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 1rem;
+      font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
     }
     .testimonial-name { font-weight: 600; font-size: 0.95rem; }
-    .testimonial-role { font-size: 0.8rem; color: var(--text-muted); }
-    .testimonial-stars { color: #FBBF24; margin-bottom: 12px; letter-spacing: 2px; }
+    .testimonial-role { font-size: 0.8rem; color: var(--text-dimmer); }
 
-    /* === FAQ === */
-    .faq-list {
-      max-width: 700px; margin: 0 auto;
-    }
+    /* ═══ FAQ ═══ */
+    .faq-list { max-width: 720px; margin: 0 auto; }
     .faq-item {
-      border-bottom: 1px solid var(--glass-border);
+      border: 1px solid var(--border); border-radius: 16px;
+      margin-bottom: 12px; overflow: hidden;
+      background: var(--bg-card); backdrop-filter: blur(12px);
+      transition: border-color 250ms;
     }
-    .faq-question {
+    .faq-item:hover { border-color: var(--border-hover); }
+    .faq-q {
       width: 100%; background: none; border: none; color: var(--text);
-      padding: 20px 0; font-size: 1.05rem; font-weight: 500;
+      padding: 22px 28px; font-size: 1rem; font-weight: 500;
       text-align: left; cursor: pointer;
       display: flex; justify-content: space-between; align-items: center;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif; gap: 16px;
     }
-    .faq-question:hover { color: var(--primary); }
-    .faq-question .arrow {
-      transition: transform 300ms; font-size: 1.2rem;
+    .faq-q:hover { color: var(--purple-light); }
+    .faq-arrow {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(124,58,237,0.1); display: flex;
+      align-items: center; justify-content: center;
+      transition: transform 300ms, background 300ms;
+      flex-shrink: 0; font-size: 0.7rem; color: var(--purple-light);
     }
-    .faq-item.open .arrow { transform: rotate(180deg); }
-    .faq-answer {
+    .faq-item.open .faq-arrow { transform: rotate(180deg); background: rgba(124,58,237,0.2); }
+    .faq-a {
       max-height: 0; overflow: hidden;
-      transition: max-height 300ms ease, padding 300ms ease;
-      color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;
+      transition: max-height 400ms cubic-bezier(.4,0,.2,1), padding 400ms;
+      color: var(--text-dim); font-size: 0.95rem; line-height: 1.8;
+      padding: 0 28px;
     }
-    .faq-item.open .faq-answer {
-      max-height: 200px; padding-bottom: 20px;
-    }
+    .faq-item.open .faq-a { max-height: 300px; padding: 0 28px 24px; }
 
-    /* === FINAL CTA === */
+    /* ═══ FINAL CTA ═══ */
     .final-cta {
-      text-align: center; padding: 96px 24px;
-      position: relative;
-    }
-    .final-cta-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(124, 58, 237, 0.1));
-      border-radius: 32px;
-    }
-    .final-cta-content {
+      text-align: center; padding: 120px 24px;
       position: relative; z-index: 1;
     }
+    .final-cta-glow {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 50%,
+        rgba(124,58,237,0.12), rgba(6,182,212,0.06), transparent);
+    }
+    .final-cta-content { position: relative; z-index: 1; }
     .final-cta h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 16px;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      margin-bottom: 16px; font-weight: 800; letter-spacing: -1px;
     }
     .final-cta p {
-      color: var(--text-muted); margin-bottom: 32px;
-      font-size: 1.1rem; max-width: 500px; margin-left: auto; margin-right: auto;
+      color: var(--text-dim); margin-bottom: 36px;
+      font-size: 1.1rem; max-width: 550px; margin-left: auto; margin-right: auto;
+      line-height: 1.75;
+    }
+    .urgency-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 20px; font-size: 0.85rem; color: var(--orange);
+      background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25);
+      padding: 8px 18px; border-radius: 100px;
     }
 
-    /* === FOOTER === */
+    /* ═══ FOOTER ═══ */
     footer {
-      text-align: center; padding: 32px;
-      border-top: 1px solid var(--glass-border);
-      color: var(--text-muted); font-size: 0.85rem;
+      text-align: center; padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-dimmer); font-size: 0.8rem;
+      position: relative; z-index: 1;
     }
 
-    /* === ANIMATIONS === */
-    .fade-in {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 600ms ease, transform 600ms ease;
+    /* ═══ ANIMATIONS ═══ */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 700ms cubic-bezier(.4,0,.2,1),
+                  transform 700ms cubic-bezier(.4,0,.2,1);
     }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 100ms; }
+    .reveal-delay-2 { transition-delay: 200ms; }
+    .reveal-delay-3 { transition-delay: 300ms; }
 
-    /* === RESPONSIVE === */
+    .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .particle {
+      position: absolute; width: 2px; height: 2px;
+      background: rgba(255,255,255,0.3); border-radius: 50%;
+      animation: particleFloat linear infinite;
+    }
+    @keyframes particleFloat {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
-      .hero-trust { gap: 24px; }
-      .trust-item .number { font-size: 1.5rem; }
-      section { padding: 64px 0; }
-      .pain-grid, .solution-grid, .testimonials-grid {
-        grid-template-columns: 1fr;
-      }
+      .sec { padding: 72px 0; }
+      .trust-row { gap: 20px; }
+      .trust-val { font-size: 1.5rem; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { letter-spacing: -0.5px; }
+      .cta-primary { padding: 16px 32px; font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .metrics-row { grid-template-columns: 1fr; }
     }
 
-    /* === ACCESSIBILITY === */
+    /* ═══ ACCESSIBILITY ═══ */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
       }
+      .aurora-blob { animation: none !important; opacity: 0.1; }
+      .particle { display: none; }
     }
-    :focus-visible {
-      outline: 3px solid var(--primary);
-      outline-offset: 2px;
-    }
+    :focus-visible { outline: 3px solid var(--purple-light); outline-offset: 3px; }
     a { color: inherit; text-decoration: none; }
   </style>
 </head>
 <body>
 
+  <!-- AURORA BG -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora-blob"></div>
+    <div class="aurora-blob"></div>
+    <div class="aurora-blob"></div>
+    <div class="aurora-blob"></div>
+  </div>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="particles" aria-hidden="true" id="particles"></div>
+
   <!-- HEADER -->
   <header>
-    <div class="header-inner">
+    <nav class="nav">
       <div class="logo">Tolki</div>
-      <button class="header-cta" aria-label="Falar com especialista Tolki">Falar com especialista</button>
-    </div>
+      <button class="nav-cta" aria-label="Falar com especialista Tolki">Falar com especialista</button>
+    </nav>
   </header>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg" aria-hidden="true">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-    </div>
     <div class="container">
       <div class="hero-content">
-        <div class="hero-badge">
-          <span class="dot" aria-hidden="true"></span>
-          +200 clínicas já usam Tolki
+        <div class="hero-badge reveal">
+          <span class="badge-dot" aria-hidden="true"></span>
+          +200 clínicas ativas
         </div>
-        <h1>Sua clínica com a <span class="highlight">agenda lotada em 90 dias</span> sem tráfego pago</h1>
-        <p>Sistema inteligente de captação, atendimento via IA 24/7 e follow-up automático que transforma visitantes em pacientes agendados.</p>
-        <button class="hero-cta" aria-label="Quero lotar minha agenda com Tolki">
-          Quero lotar minha agenda
-          <span aria-hidden="true">→</span>
+        <h1 class="reveal">Sua Clínica <span class="hero-gradient-text">Lotada em 90 Dias</span></h1>
+        <p class="hero-sub reveal">O mesmo método que já ajudou <strong>+200 clínicas</strong> a triplicar agendamentos. Captação ativa + IA que converte + follow-up automático. <strong>Tudo no piloto automático.</strong></p>
+        <button class="cta-primary reveal" aria-label="Quero lotar minha agenda">
+          Quero lotar minha agenda <span aria-hidden="true">→</span>
         </button>
-        <div class="hero-trust">
-          <div class="trust-item">
-            <div class="number">3x</div>
-            <div class="label">mais agendamentos</div>
+        <div class="trust-row">
+          <div class="trust-item reveal reveal-delay-1">
+            <div class="trust-val">+200</div>
+            <div class="trust-label">Clínicas ativas</div>
           </div>
-          <div class="trust-item">
-            <div class="number">-60%</div>
-            <div class="label">custo por paciente</div>
+          <div class="trust-item reveal reveal-delay-2">
+            <div class="trust-val">3x</div>
+            <div class="trust-label">Mais agendamentos</div>
           </div>
-          <div class="trust-item">
-            <div class="number">24/7</div>
-            <div class="label">atendimento via IA</div>
+          <div class="trust-item reveal reveal-delay-3">
+            <div class="trust-val">-60%</div>
+            <div class="trust-label">Menos custo</div>
+          </div>
+          <div class="trust-item reveal reveal-delay-3">
+            <div class="trust-val">24/7</div>
+            <div class="trust-label">Atendimento IA</div>
           </div>
         </div>
       </div>
@@ -418,104 +518,103 @@
   </section>
 
   <!-- PAIN POINTS -->
-  <section>
+  <section class="sec">
     <div class="container">
-      <h2 class="section-title fade-in">Você se identifica?</h2>
-      <p class="section-subtitle fade-in">Os 3 problemas mais comuns de clínicas que ainda não automatizaram sua captação.</p>
-      <div class="pain-grid">
-        <div class="pain-card fade-in">
-          <div class="pain-icon" aria-hidden="true">📅</div>
+      <div class="sec-label reveal">O problema</div>
+      <h2 class="sec-title reveal">Você se identifica?</h2>
+      <p class="sec-sub reveal">A maioria das clínicas enfrenta esses 3 problemas. A boa notícia: todos têm solução.</p>
+      <div class="grid-3">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon card-icon-red" aria-hidden="true">📅</div>
           <h3>Agenda vazia sem explicação</h3>
-          <p>Você investiu na clínica, tem estrutura, tem equipe... mas os pacientes simplesmente não aparecem. A agenda tem mais buracos do que consultas.</p>
+          <p>Um mês lota, no outro despenca. Você não consegue prever o faturamento e vive apagando incêndio. Enquanto isso, o aluguel e a folha não esperam.</p>
         </div>
-        <div class="pain-card fade-in">
-          <div class="pain-icon" aria-hidden="true">💸</div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon card-icon-red" aria-hidden="true">💸</div>
           <h3>Tráfego pago cada vez mais caro</h3>
-          <p>O custo por lead subiu, a concorrência aumentou, e o retorno do Google/Meta Ads já não justifica o investimento que você faz todo mês.</p>
+          <p>Você joga R$ 3.000, R$ 5.000 por mês em anúncios e a maioria dos leads nem responde. Os que respondem, pedem preço e somem. O ROI nunca fecha.</p>
         </div>
-        <div class="pain-card fade-in">
-          <div class="pain-icon" aria-hidden="true">❄️</div>
-          <h3>Leads esfriando na caixa</h3>
-          <p>As mensagens chegam pelo WhatsApp ou Instagram, mas ninguém responde a tempo. Quando sua equipe vê, o paciente já marcou em outro lugar.</p>
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon card-icon-red" aria-hidden="true">❄️</div>
+          <h3>Leads esfriando na sua caixa</h3>
+          <p>A recepcionista não dá conta. Lead entra às 22h e só é respondido no outro dia. Quando liga, já foi pro concorrente. Dinheiro jogado fora todos os dias.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SOLUTION -->
-  <section class="solution-section">
+  <!-- METHOD -->
+  <section class="sec sec-alt">
     <div class="container">
-      <h2 class="section-title fade-in">O Método Tolki</h2>
-      <p class="section-subtitle fade-in">3 pilares que funcionam juntos para lotar sua agenda automaticamente.</p>
-      <div class="solution-grid">
-        <div class="solution-card fade-in">
-          <div class="solution-step">Passo 1</div>
-          <div class="solution-icon" aria-hidden="true">🎯</div>
+      <div class="sec-label reveal">A solução</div>
+      <h2 class="sec-title reveal">O Método Tolki</h2>
+      <p class="sec-sub reveal">3 pilares que transformam sua clínica em máquina de agendamentos.</p>
+      <div class="grid-3">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-step">Passo 01</div>
+          <div class="card-icon card-icon-purple" aria-hidden="true">🎯</div>
           <h3>Captação Ativa</h3>
-          <p>Identificamos e atraímos pacientes qualificados da sua região usando estratégias orgânicas e presença digital otimizada. Sem depender de anúncios pagos.</p>
+          <p>Nosso sistema encontra e alcança milhares de pessoas buscando exatamente o que sua clínica oferece. Sem depender de anúncios. Sem esperar indicações. Pacientes qualificados batendo na sua porta todo dia.</p>
         </div>
-        <div class="solution-card fade-in">
-          <div class="solution-icon" aria-hidden="true">🤖</div>
-          <div class="solution-step">Passo 2</div>
+        <div class="card reveal reveal-delay-2">
+          <div class="card-step">Passo 02</div>
+          <div class="card-icon card-icon-blue" aria-hidden="true">🤖</div>
           <h3>IA que Converte</h3>
-          <p>Nossa inteligência artificial atende os leads instantaneamente, 24 horas por dia. Responde dúvidas, qualifica o paciente e agenda a consulta — tudo automático.</p>
+          <p>Atendimento instantâneo, 24 horas, 7 dias por semana. A IA entende as dúvidas do paciente, explica procedimentos, tira objeções e agenda a consulta. Enquanto você dorme, ela está vendendo.</p>
         </div>
-        <div class="solution-card fade-in">
-          <div class="solution-step">Passo 3</div>
-          <div class="solution-icon" aria-hidden="true">🔄</div>
+        <div class="card reveal reveal-delay-3">
+          <div class="card-step">Passo 03</div>
+          <div class="card-icon card-icon-cyan" aria-hidden="true">🔄</div>
           <h3>Follow-up Infinito + CRM</h3>
-          <p>Pacientes que não agendaram de primeira recebem acompanhamento automático. O CRM organiza tudo e garante que nenhum lead se perca.</p>
+          <p>Lead esfriou? O sistema reativa. Paciente não confirmou? Lembrete automático. Faltou à consulta? Reagendamento imediato. Nenhum lead é perdido. Nunca mais.</p>
         </div>
       </div>
-
-      <!-- METRICS -->
-      <div class="metrics">
-        <div class="metric-card fade-in">
-          <div class="value">3x</div>
-          <div class="desc">Aumento em agendamentos</div>
+      <div class="metrics-row">
+        <div class="metric reveal">
+          <div class="metric-val">3x</div>
+          <div class="metric-desc">Aumento em consultas agendadas</div>
         </div>
-        <div class="metric-card fade-in">
-          <div class="value">&lt;30s</div>
-          <div class="desc">Tempo de resposta da IA</div>
+        <div class="metric reveal reveal-delay-1">
+          <div class="metric-val">-60%</div>
+          <div class="metric-desc">Redução de custo operacional</div>
         </div>
-        <div class="metric-card fade-in">
-          <div class="value">92%</div>
-          <div class="desc">Taxa de satisfação</div>
+        <div class="metric reveal reveal-delay-2">
+          <div class="metric-val">-80%</div>
+          <div class="metric-desc">Menos gasto com anúncios</div>
         </div>
-        <div class="metric-card fade-in">
-          <div class="value">-60%</div>
-          <div class="desc">Redução de custo operacional</div>
+        <div class="metric reveal reveal-delay-3">
+          <div class="metric-val">&lt;30s</div>
+          <div class="metric-desc">Tempo médio de resposta ao lead</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- COMPARISON -->
-  <section>
+  <section class="sec">
     <div class="container">
-      <h2 class="section-title fade-in">Sua clínica sem vs com Tolki</h2>
-      <p class="section-subtitle fade-in">Veja a diferença que a automação inteligente faz no dia a dia.</p>
-      <div class="comparison fade-in">
-        <div class="compare-col before">
+      <div class="sec-label reveal">A diferença</div>
+      <h2 class="sec-title reveal">Sua clínica sem vs com Tolki</h2>
+      <p class="sec-sub reveal">Veja o que muda quando você automatiza sua captação.</p>
+      <div class="compare-grid reveal">
+        <div class="compare-col compare-sem">
           <h3><span aria-hidden="true">😩</span> Sem Tolki</h3>
           <ul>
-            <li>Resposta ao lead em horas ou dias</li>
-            <li>Leads perdidos no WhatsApp</li>
-            <li>Gastos altos com tráfego pago</li>
-            <li>Agenda com buracos</li>
-            <li>Sem controle dos contatos</li>
-            <li>Equipe sobrecarregada</li>
+            <li><span class="icon" aria-hidden="true">✕</span> Depende de indicações</li>
+            <li><span class="icon" aria-hidden="true">✕</span> Lead respondido em horas</li>
+            <li><span class="icon" aria-hidden="true">✕</span> R$ 5k/mês em tráfego</li>
+            <li><span class="icon" aria-hidden="true">✕</span> Leads somem sem follow-up</li>
+            <li><span class="icon" aria-hidden="true">✕</span> Faturamento imprevisível</li>
           </ul>
         </div>
-        <div class="compare-col after">
+        <div class="compare-col compare-com">
           <h3><span aria-hidden="true">🚀</span> Com Tolki</h3>
           <ul>
-            <li>Resposta instantânea 24/7</li>
-            <li>Todo lead é acompanhado</li>
-            <li>Captação orgânica automatizada</li>
-            <li>Agenda lotada em 90 dias</li>
-            <li>CRM completo e organizado</li>
-            <li>Equipe focada no que importa</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Pacientes novos todo dia</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Resposta em segundos, 24h</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Captação ativa mais barata</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Follow-up automático infinito</li>
+            <li><span class="icon" aria-hidden="true">✓</span> Previsibilidade total</li>
           </ul>
         </div>
       </div>
@@ -523,41 +622,42 @@
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="solution-section">
+  <section class="sec sec-alt">
     <div class="container">
-      <h2 class="section-title fade-in">Resultados reais</h2>
-      <p class="section-subtitle fade-in">O que nossos clientes dizem sobre a transformação.</p>
-      <div class="testimonials-grid">
-        <div class="testimonial-card fade-in">
+      <div class="sec-label reveal">Resultados reais</div>
+      <h2 class="sec-title reveal">Números que falam por si só</h2>
+      <p class="sec-sub reveal">Média dos primeiros 90 dias dos nossos clientes.</p>
+      <div class="grid-3">
+        <div class="testimonial reveal reveal-delay-1">
           <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
-          <p class="quote">"Em 60 dias minha agenda saiu de 40% para 95% de ocupação. A IA responde os pacientes melhor do que minha secretária fazia."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar" aria-hidden="true">DR</div>
-            <div>
-              <div class="testimonial-name">Dra. Renata Oliveira</div>
-              <div class="testimonial-role">Dermatologista — São Paulo, SP</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card fade-in">
-          <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
-          <p class="quote">"Parei de gastar R$5.000/mês com Google Ads. Hoje a Tolki capta mais pacientes organicamente do que eu conseguia pagando."</p>
+          <p class="testimonial-text">"Em 60 dias triplicamos os agendamentos e cortei o tráfego pago pela metade. Hoje minha recepcionista foca no atendimento, não em responder WhatsApp."</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar" aria-hidden="true">DM</div>
             <div>
-              <div class="testimonial-name">Dr. Marcos Ferreira</div>
-              <div class="testimonial-role">Ortodontista — Belo Horizonte, MG</div>
+              <div class="testimonial-name">Dr. Diego M.</div>
+              <div class="testimonial-role">Ortodontista — São Paulo, SP</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card fade-in">
+        <div class="testimonial reveal reveal-delay-2">
           <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
-          <p class="quote">"O follow-up automático recuperou pacientes que eu achava que tinha perdido. Já são 3 meses com agenda 100% cheia."</p>
+          <p class="testimonial-text">"Eu perdia 40% dos leads porque demorava para responder. Agora a IA responde na hora e já agenda. Meu faturamento subiu 180% em 3 meses."</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar" aria-hidden="true">DC</div>
+            <div class="testimonial-avatar" aria-hidden="true">RL</div>
             <div>
-              <div class="testimonial-name">Dra. Camila Santos</div>
-              <div class="testimonial-role">Nutricionista — Rio de Janeiro, RJ</div>
+              <div class="testimonial-name">Dra. Renata L.</div>
+              <div class="testimonial-role">Dermatologista — Belo Horizonte, MG</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial reveal reveal-delay-3">
+          <div class="testimonial-stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="testimonial-text">"A Tolki resolveu meu maior problema: previsibilidade. Hoje sei exatamente quantos pacientes vou atender por semana. Isso mudou tudo na gestão."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" aria-hidden="true">CA</div>
+            <div>
+              <div class="testimonial-name">Dr. Carlos A.</div>
+              <div class="testimonial-role">Fisioterapeuta — Curitiba, PR</div>
             </div>
           </div>
         </div>
@@ -566,38 +666,53 @@
   </section>
 
   <!-- FAQ -->
-  <section>
+  <section class="sec">
     <div class="container">
-      <h2 class="section-title fade-in">Dúvidas frequentes</h2>
-      <p class="section-subtitle fade-in">Tudo que você precisa saber antes de começar.</p>
+      <div class="sec-label reveal">Dúvidas</div>
+      <h2 class="sec-title reveal">Dúvidas frequentes</h2>
+      <p class="sec-sub reveal">Tudo que você precisa saber antes de começar.</p>
       <div class="faq-list">
-        <div class="faq-item fade-in">
-          <button class="faq-question" aria-expanded="false">
-            Funciona para qualquer especialidade médica?
-            <span class="arrow" aria-hidden="true">▼</span>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Como funciona a captação ativa?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
           </button>
-          <div class="faq-answer">Sim! Temos clínicas de dermatologia, odontologia, nutrição, psicologia, ortopedia e muitas outras especialidades. O sistema se adapta ao seu tipo de atendimento.</div>
+          <div class="faq-a">Nosso sistema proprietário identifica pessoas buscando tratamentos na sua especialidade e inicia o contato via WhatsApp de forma personalizada. É como ter um vendedor trabalhando 24h para encher sua agenda — só que mais barato e mais eficiente que qualquer anúncio.</div>
         </div>
-        <div class="faq-item fade-in">
-          <button class="faq-question" aria-expanded="false">
-            Preciso parar meus anúncios atuais?
-            <span class="arrow" aria-hidden="true">▼</span>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            A IA realmente é melhor que atendimento humano?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
           </button>
-          <div class="faq-answer">Não. A Tolki funciona junto ou independente dos seus anúncios. O objetivo é criar um canal de captação orgânica que eventualmente reduz sua dependência de tráfego pago.</div>
+          <div class="faq-a">Para a primeira resposta e qualificação, sim. Ela responde em segundos, nunca esquece de fazer follow-up, e está disponível às 23h de domingo. Quando o paciente precisa de atenção especial, a IA transfere para sua equipe com todo o contexto.</div>
         </div>
-        <div class="faq-item fade-in">
-          <button class="faq-question" aria-expanded="false">
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Funciona para minha especialidade?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-a">Sim. Atendemos odonto, fisio, nutri, dermato, psico, estética, ortopedia e mais. A IA é configurada com o vocabulário e processos específicos da sua área. Cada clínica tem um setup personalizado.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
             Em quanto tempo vejo resultados?
-            <span class="arrow" aria-hidden="true">▼</span>
+            <span class="faq-arrow" aria-hidden="true">▼</span>
           </button>
-          <div class="faq-answer">A maioria dos nossos clientes vê aumento nos agendamentos já nas primeiras 2-3 semanas. O resultado completo — agenda lotada — acontece nos primeiros 90 dias.</div>
+          <div class="faq-a">Primeiros agendamentos acontecem nos primeiros 15-30 dias. Em 90 dias, você terá um sistema rodando no piloto automático com previsibilidade de faturamento.</div>
         </div>
-        <div class="faq-item fade-in">
-          <button class="faq-question" aria-expanded="false">
-            A IA vai substituir minha secretária?
-            <span class="arrow" aria-hidden="true">▼</span>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Preciso entender de tecnologia?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
           </button>
-          <div class="faq-answer">Não. A IA cuida do primeiro contato e qualificação 24/7. Sua equipe foca no atendimento presencial e tarefas que realmente precisam do toque humano.</div>
+          <div class="faq-a">Zero. A gente configura tudo. Você só precisa atender os pacientes que chegam. Tem suporte dedicado sempre que precisar.</div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">
+            Quanto custa?
+            <span class="faq-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="faq-a">Depende do tamanho da sua clínica e dos seus objetivos. A consulta inicial é 100% gratuita — nela analisamos seu caso e apresentamos um plano com investimento e ROI projetado. Sem surpresas.</div>
         </div>
       </div>
     </div>
@@ -605,54 +720,69 @@
 
   <!-- FINAL CTA -->
   <section class="final-cta">
+    <div class="final-cta-glow" aria-hidden="true"></div>
     <div class="container">
-      <div class="final-cta-bg" aria-hidden="true"></div>
-      <div class="final-cta-content fade-in">
-        <h2>Pronto para lotar sua agenda?</h2>
-        <p>Converse com um especialista e descubra como a Tolki pode transformar sua clínica em 90 dias.</p>
-        <button class="hero-cta" aria-label="Quero lotar minha agenda com Tolki">
-          Quero lotar minha agenda
-          <span aria-hidden="true">→</span>
+      <div class="final-cta-content reveal">
+        <div class="sec-label">Comece agora</div>
+        <h2>Pronto para parar de<br>perder pacientes?</h2>
+        <p>Cada dia sem um sistema de captação ativa é dinheiro saindo da sua clínica. Fale com um especialista agora e veja como funciona para o seu caso.</p>
+        <button class="cta-primary" aria-label="Quero minha agenda lotada">
+          Quero minha agenda lotada <span aria-hidden="true">→</span>
         </button>
+        <div class="urgency-badge">
+          <span aria-hidden="true">⚡</span> Restam vagas para onboarding este mês
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>&copy; 2026 Tolki. Todos os direitos reservados.</p>
+    <p>TOLKI SOLUCOES E SISTEMAS LTDA. | CNPJ: 62.124.914/0001-11 | &copy; 2024 Todos os direitos reservados</p>
   </footer>
 
-  <!-- SCRIPTS -->
   <script>
-    // Scroll reveal animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
+    // Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // FAQ accordion
-    document.querySelectorAll('.faq-question').forEach(btn => {
+    // FAQ
+    document.querySelectorAll('.faq-q').forEach(btn => {
       btn.addEventListener('click', () => {
         const item = btn.parentElement;
-        const isOpen = item.classList.contains('open');
-
-        // Close all
+        const wasOpen = item.classList.contains('open');
         document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-        document.querySelectorAll('.faq-question').forEach(b => b.setAttribute('aria-expanded', 'false'));
-
-        // Toggle current
-        if (!isOpen) {
+        document.querySelectorAll('.faq-q').forEach(b => b.setAttribute('aria-expanded', 'false'));
+        if (!wasOpen) {
           item.classList.add('open');
           btn.setAttribute('aria-expanded', 'true');
         }
       });
     });
+
+    // Particles
+    (function() {
+      const c = document.getElementById('particles');
+      const n = window.innerWidth < 768 ? 15 : 35;
+      for (let i = 0; i < n; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 16) + 's';
+        p.style.animationDelay = (Math.random() * 12) + 's';
+        p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+        p.style.opacity = 0.1 + Math.random() * 0.3;
+        c.appendChild(p);
+      }
+    })();
+
+    // Header scroll
+    window.addEventListener('scroll', () => {
+      document.querySelector('header').style.background =
+        window.scrollY > 60 ? 'rgba(5,5,16,0.9)' : 'rgba(5,5,16,0.7)';
+    }, { passive: true });
   </script>
 </body>
 </html>
