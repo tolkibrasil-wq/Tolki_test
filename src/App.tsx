@@ -4,8 +4,44 @@ import { SocialProof } from './remotion/components/SocialProof';
 import { WhatsAppChat } from './remotion/components/WhatsAppChat';
 import { MassDispatch } from './remotion/components/MassDispatch';
 import { InstitutionalVideo } from './remotion/components/InstitutionalVideo';
+import {
+  AdRoteiro1PacienteVoltaSozinho,
+  AdRoteiro2ContaNaoFecha,
+  AdRoteiro4ZeroAnuncio,
+  FRAME_COUNTS,
+} from './remotion/components/AdConversa2Pessoas';
 
 const compositions = [
+  {
+    id: 'AdRoteiro1-PacienteVoltaSozinho',
+    title: 'Ad: Paciente que Volta',
+    desc: 'Roteiro 1 — Conversa entre 2 pessoas. Hook: "Um dentista me mandou isso..." | 9:16 Reels/TikTok',
+    component: AdRoteiro1PacienteVoltaSozinho,
+    duration: FRAME_COUNTS.roteiro1,
+    width: 1080,
+    height: 1920,
+    accent: '#FF3366',
+  },
+  {
+    id: 'AdRoteiro2-ContaNaoFecha',
+    title: 'Ad: Conta que Não Fecha',
+    desc: 'Roteiro 2 — Dor financeira + cálculo. Hook: "Faz uma conta rápida comigo..." | 9:16 Reels/TikTok',
+    component: AdRoteiro2ContaNaoFecha,
+    duration: FRAME_COUNTS.roteiro2,
+    width: 1080,
+    height: 1920,
+    accent: '#EF4444',
+  },
+  {
+    id: 'AdRoteiro4-ZeroAnuncio',
+    title: 'Ad: Zero Anúncio',
+    desc: 'Roteiro 4 — Caso real sem anúncio. Hook: "Essa clínica zerou o orçamento..." | 9:16 Reels/TikTok',
+    component: AdRoteiro4ZeroAnuncio,
+    duration: FRAME_COUNTS.roteiro4,
+    width: 1080,
+    height: 1920,
+    accent: '#F97316',
+  },
   {
     id: 'InstitutionalVideo',
     title: 'Video Institucional',
@@ -71,7 +107,7 @@ export const App: React.FC = () => {
           Animações <span style={{ color: '#A78BFA' }}>Remotion</span>
         </h1>
         <p style={styles.subtitle}>
-          4 composições criadas com React + Remotion. Clique para assistir cada uma.
+          7 composições criadas com React + Remotion. Clique para assistir cada uma.
         </p>
 
         {/* Tab selector */}
